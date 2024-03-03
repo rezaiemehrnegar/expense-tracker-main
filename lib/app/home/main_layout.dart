@@ -11,7 +11,7 @@ import 'package:monekin/core/routes/destinations.dart';
 
 @RoutePage()
 class MainLayoutPage extends StatefulWidget {
-  const MainLayoutPage({Key? key}) : super(key: key);
+  const MainLayoutPage({super.key});
 
   @override
   State<MainLayoutPage> createState() => _MainLayoutPageState();
@@ -20,8 +20,12 @@ class MainLayoutPage extends StatefulWidget {
 class _MainLayoutPageState extends State<MainLayoutPage> {
   @override
   Widget build(BuildContext context) {
-    final menuItems = getDestinations(context,
-        shortLabels: BreakPoint.of(context).isSmallerThan(BreakpointID.xl));
+    final menuItems = getDestinations(
+      context,
+      shortLabels: BreakPoint.of(context).isSmallerThan(
+        BreakpointID.xl,
+      ),
+    );
 
     return HeroControllerScope(
       controller: HeroController(),
@@ -30,7 +34,8 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
             stream: layoutInsideRouteName.stream,
             builder: (context, snapshot) {
               final selectedNavItemIndex = menuItems.indexWhere(
-                  (element) => element.destination.routeName == snapshot.data);
+                (element) => element.destination.routeName == snapshot.data,
+              );
 
               return BreakpointContainer(
                 mdChild: SafeArea(
@@ -119,8 +124,9 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
                             clipBehavior: Clip.hardEdge,
                             child: AutoRouter(
                               key: mainLayoutRouterKey,
-                              navigatorObservers: () =>
-                                  [MainLayoutNavObserver()],
+                              navigatorObservers: () => [
+                                MainLayoutNavObserver(),
+                              ],
                             ),
                           ),
                         ),
@@ -130,7 +136,9 @@ class _MainLayoutPageState extends State<MainLayoutPage> {
                 ),
                 child: AutoRouter(
                   key: mainLayoutRouterKey,
-                  navigatorObservers: () => [MainLayoutNavObserver()],
+                  navigatorObservers: () => [
+                    MainLayoutNavObserver(),
+                  ],
                 ),
               );
             }),

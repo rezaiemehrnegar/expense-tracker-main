@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:flutter/material.dart';
 import 'package:monekin/app/stats/widgets/finance_health/finance_health_main_info.dart';
 import 'package:monekin/core/presentation/widgets/card_with_header.dart';
@@ -16,7 +18,7 @@ class FinanceHealthDetails extends StatefulWidget {
 }
 
 class _FinanceHealthDetailsState extends State<FinanceHealthDetails> {
-  List<bool> _isOpen = [false, false];
+  final List<bool> _isOpen = [false, false];
 
   Widget buildExpansionPanel({
     required FinanceHealthAttrScore attrScore,
@@ -57,7 +59,11 @@ class _FinanceHealthDetailsState extends State<FinanceHealthDetails> {
       childrenPadding: const EdgeInsets.all(16),
       children: [
         HTMLText(
-          tags: const {'b': TextStyle(fontWeight: FontWeight.bold)},
+          tags: const {
+            'b': TextStyle(
+              fontWeight: FontWeight.bold,
+            )
+          },
           htmlString: text,
         )
       ],
@@ -83,8 +89,9 @@ class _FinanceHealthDetailsState extends State<FinanceHealthDetails> {
               CardWithHeader(
                 title: t.stats.finance_health_resume,
                 bodyPadding: const EdgeInsets.only(right: 8),
-                body:
-                    FinanceHealthMainInfo(financeHealthData: financeHealthData),
+                body: FinanceHealthMainInfo(
+                  financeHealthData: financeHealthData,
+                ),
               ),
               const SizedBox(height: 16),
               Builder(builder: (context) {

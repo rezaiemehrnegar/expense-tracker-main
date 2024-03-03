@@ -1,5 +1,6 @@
-import 'dart:async';
+// ignore_for_file: avoid_function_literals_in_foreach_calls
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:monekin/app/settings/purchases/in_app_purchase.dart';
@@ -70,7 +71,11 @@ class _DonateButtonState extends State<DonateButton> {
   showSnackbarMessage(BuildContext context, String msg) {
     final snackbarDisplayer = ScaffoldMessenger.of(context).showSnackBar;
 
-    snackbarDisplayer(SnackBar(content: Text(msg)));
+    snackbarDisplayer(
+      SnackBar(
+        content: Text(msg),
+      ),
+    );
   }
 
   @override
@@ -85,11 +90,11 @@ class _DonateButtonState extends State<DonateButton> {
           final snackbarDisplayer = ScaffoldMessenger.of(context).showSnackBar;
 
           if (!(await IAPConnection.isAvailable())) {
-            // TODO: Implement other payment methods
             snackbarDisplayer(
               const SnackBar(
                 content: Text(
-                    'The current platform not supported or the store is not ready yet'),
+                  'The current platform not supported or the store is not ready yet',
+                ),
               ),
             );
 
@@ -105,7 +110,8 @@ class _DonateButtonState extends State<DonateButton> {
             snackbarDisplayer(
               SnackBar(
                 content: Text(
-                    "Products not found -> ${response.notFoundIDs.join(',')}"),
+                  "Products not found -> ${response.notFoundIDs.join(',')}",
+                ),
               ),
             );
 
@@ -133,9 +139,12 @@ class _DonateButtonState extends State<DonateButton> {
               ? CustomColors.of(context).danger.lighten(0.8)
               : CustomColors.of(context).danger.withOpacity(0.2),
           shape: RoundedRectangleBorder(
-              side: BorderSide(
-                  color: Theme.of(context).colorScheme.tertiary, width: 2),
-              borderRadius: BorderRadius.circular(8)),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.tertiary,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(

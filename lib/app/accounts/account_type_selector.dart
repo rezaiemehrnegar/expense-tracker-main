@@ -99,14 +99,19 @@ class MonekinFilterChip extends StatelessWidget {
                 Text(
                   accountType.title(context),
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.onSurfaceVariant),
+                        color: isSelected
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                 ),
-                Text(accountType.description(context),
-                    softWrap: true,
-                    style:
-                        TextStyle(fontWeight: FontWeight.w300, fontSize: 14)),
+                Text(
+                  accountType.description(context),
+                  softWrap: true,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14,
+                  ),
+                ),
               ],
             ),
           ),

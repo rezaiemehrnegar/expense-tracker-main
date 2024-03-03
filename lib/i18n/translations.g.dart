@@ -9,7 +9,7 @@
 /// Built on 2023-12-01 at 12:33 UTC
 
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, override_on_non_overriding_member
 
 import 'package:flutter/widgets.dart';
 import 'package:slang/builder/model/node.dart';

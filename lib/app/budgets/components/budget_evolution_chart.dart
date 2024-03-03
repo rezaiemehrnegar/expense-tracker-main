@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:collection/collection.dart';
 import 'package:monekin/app/stats/widgets/fund_evolution_line_chart.dart';
 import 'package:monekin/core/models/budget/budget.dart';
@@ -29,11 +28,17 @@ class BudgetEvolutionChart extends StatelessWidget {
     final dayRange = (endDate.difference(startDate).inDays / 100).ceil();
 
     while (currentDay.compareTo(endDate) < 0) {
-      labels.add(DateFormat.yMMMMd().format(currentDay));
+      labels.add(
+        DateFormat.yMMMMd().format(currentDay),
+      );
 
-      balance.add(budget.getValueOnDate(currentDay).first);
+      balance.add(
+        budget.getValueOnDate(currentDay).first,
+      );
 
-      currentDay = currentDay.add(Duration(days: dayRange));
+      currentDay = currentDay.add(
+        Duration(days: dayRange),
+      );
     }
 
     return LineChartDataItem(
@@ -69,123 +74,144 @@ class BudgetEvolutionChart extends StatelessWidget {
               );
             }
 
-            return LineChart(LineChartData(
-              gridData: FlGridData(show: true, drawVerticalLine: false),
-              extraLinesData: ExtraLinesData(horizontalLines: [
-                HorizontalLine(
-                    y: budget.limitAmount,
-                    color: Colors.orange,
-                    dashArray: [12, 2],
-                    label: HorizontalLineLabel(
-                      show: true,
-                      padding: const EdgeInsets.only(left: 2),
-                      style: const TextStyle(
-                        color: Colors.orange,
-                      ),
-                      labelResolver: (p0) => t.budgets.details.budget_value,
-                    ))
-              ]),
-              lineTouchData: LineTouchData(
-                  touchTooltipData: LineTouchTooltipData(
-                tooltipBgColor: Theme.of(context).colorScheme.background,
-                tooltipHorizontalAlignment: FLHorizontalAlignment.right,
-                tooltipMargin: -10,
-                getTooltipItems: (touchedSpots) {
-                  return touchedSpots.map((barSpot) {
-                    final flSpot = barSpot;
-                    if (flSpot.x == 0 || flSpot.x == 6) {
-                      return null;
-                    }
-
-                    return LineTooltipItem(
-                        '${snapshot.data!.labels[flSpot.x.toInt()]} \n',
-                        const TextStyle(),
-                        children: [
-                          TextSpan(
-                              text:
-                                  '${snapshot.data!.balance[flSpot.x.toInt()]}',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ))
-                        ]);
-                  }).toList();
-                },
-              )),
-              titlesData: FlTitlesData(
-                show: true,
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
+            return LineChart(
+              LineChartData(
+                gridData: const FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
                 ),
-                topTitles: AxisTitles(
-                  sideTitles: SideTitles(showTitles: false),
-                ),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: false,
-                    getTitlesWidget: (value, meta) {
-                      return Text(
-                        snapshot.data!.labels[int.parse(meta.formattedValue)],
+                extraLinesData: ExtraLinesData(horizontalLines: [
+                  HorizontalLine(
+                      y: budget.limitAmount,
+                      color: Colors.orange,
+                      dashArray: [12, 2],
+                      label: HorizontalLineLabel(
+                        show: true,
+                        padding: const EdgeInsets.only(left: 2),
                         style: const TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w200),
-                      );
+                          color: Colors.orange,
+                        ),
+                        labelResolver: (p0) => t.budgets.details.budget_value,
+                      ))
+                ]),
+                lineTouchData: LineTouchData(
+                  touchTooltipData: LineTouchTooltipData(
+                    tooltipBgColor: Theme.of(context).colorScheme.background,
+                    tooltipHorizontalAlignment: FLHorizontalAlignment.right,
+                    tooltipMargin: -10,
+                    getTooltipItems: (touchedSpots) {
+                      return touchedSpots.map((barSpot) {
+                        final flSpot = barSpot;
+                        if (flSpot.x == 0 || flSpot.x == 6) {
+                          return null;
+                        }
+
+                        return LineTooltipItem(
+                            '${snapshot.data!.labels[flSpot.x.toInt()]} \n',
+                            const TextStyle(),
+                            children: [
+                              TextSpan(
+                                text:
+                                    '${snapshot.data!.balance[flSpot.x.toInt()]}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            ]);
+                      }).toList();
                     },
                   ),
                 ),
-                rightTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 46,
-                    getTitlesWidget: (value, meta) {
-                      if (value == meta.max || value == meta.min) {
-                        return Container();
-                      }
-
-                      return SideTitleWidget(
-                        axisSide: meta.axisSide,
-                        child: Text(
-                          meta.formattedValue,
+                titlesData: FlTitlesData(
+                  show: true,
+                  leftTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                    ),
+                  ),
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: false,
+                      getTitlesWidget: (value, meta) {
+                        return Text(
+                          snapshot.data!.labels[int.parse(
+                            meta.formattedValue,
+                          )],
                           style: const TextStyle(
                             fontSize: 12,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w200,
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ),
-              borderData: FlBorderData(show: false),
-              minY: 0,
-              maxY: max(
-                  snapshot.data!.balance.max + snapshot.data!.balance.max * 0.1,
-                  budget.limitAmount * 1.1),
-              lineBarsData: [
-                LineChartBarData(
-                  spots: List.generate(
-                      snapshot.data!.balance.length,
-                      (index) => FlSpot(
-                          index.toDouble(), snapshot.data!.balance[index])),
-                  isCurved: true,
-                  curveSmoothness: 0.025,
-                  color: gradientColors[0],
-                  barWidth: 5,
-                  isStrokeCapRound: true,
-                  dotData: FlDotData(
-                    show: false,
-                  ),
-                  belowBarData: BarAreaData(
-                    show: true,
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: gradientColors
-                          .map((color) => color.withOpacity(0.3))
-                          .toList(),
+                  rightTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 46,
+                      getTitlesWidget: (value, meta) {
+                        if (value == meta.max || value == meta.min) {
+                          return Container();
+                        }
+
+                        return SideTitleWidget(
+                          axisSide: meta.axisSide,
+                          child: Text(
+                            meta.formattedValue,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
-              ],
-            ));
+                borderData: FlBorderData(show: false),
+                minY: 0,
+                maxY: max(
+                    snapshot.data!.balance.max +
+                        snapshot.data!.balance.max * 0.1,
+                    budget.limitAmount * 1.1),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: List.generate(
+                      snapshot.data!.balance.length,
+                      (index) => FlSpot(
+                        index.toDouble(),
+                        snapshot.data!.balance[index],
+                      ),
+                    ),
+                    isCurved: true,
+                    curveSmoothness: 0.025,
+                    color: gradientColors[0],
+                    barWidth: 5,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(
+                      show: false,
+                    ),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: gradientColors
+                            .map(
+                              (color) => color.withOpacity(0.3),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
           }),
     );
   }

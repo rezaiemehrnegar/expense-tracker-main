@@ -61,8 +61,8 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
               ),
               contentPadding: const EdgeInsets.only(top: 12),
               content: SingleChildScrollView(
-                  child: StatefulBuilder(builder: (context, alertState) {
-                return Column(
+                child: StatefulBuilder(builder: (context, alertState) {
+                  return Column(
                     children: items
                         .map(
                           (item) => RadioListTile(
@@ -77,8 +77,10 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
                             },
                           ),
                         )
-                        .toList());
-              })),
+                        .toList(),
+                  );
+                }),
+              ),
               actions: [
                 TextButton(
                   child: Text(t.general.cancel),
@@ -116,7 +118,10 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
               ],
               selected: LocaleSettings.currentLocale.languageTag,
               onChanged: (value) {
-                LocaleSettings.setLocaleRaw(value, listenToDeviceLocale: true);
+                LocaleSettings.setLocaleRaw(
+                  value,
+                  listenToDeviceLocale: true,
+                );
 
                 UserSettingService.instance
                     .setSetting(SettingKey.appLanguage, value)
@@ -132,18 +137,25 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
                     title: t.settings.general.theme,
                     items: [
                       SelectItem(
-                          value: 'system',
-                          label: t.settings.general.theme_auto),
+                        value: 'system',
+                        label: t.settings.general.theme_auto,
+                      ),
                       SelectItem(
-                          value: 'light',
-                          label: t.settings.general.theme_light),
+                        value: 'light',
+                        label: t.settings.general.theme_light,
+                      ),
                       SelectItem(
-                          value: 'dark', label: t.settings.general.theme_dark)
+                        value: 'dark',
+                        label: t.settings.general.theme_dark,
+                      )
                     ],
                     selected: snapshot.data ?? 'system',
                     onChanged: (value) {
                       UserSettingService.instance
-                          .setSetting(SettingKey.themeMode, value)
+                          .setSetting(
+                            SettingKey.themeMode,
+                            value,
+                          )
                           .then((value) => null);
                     },
                   );
@@ -163,7 +175,9 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
                         : (bool value) {
                             setState(() {
                               UserSettingService.instance.setSetting(
-                                  SettingKey.amoledMode, value ? '1' : '0');
+                                SettingKey.amoledMode,
+                                value ? '1' : '0',
+                              );
                             });
                           },
                   );
@@ -175,8 +189,12 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
                 initialData: true,
                 builder: (context, snapshot) {
                   return SwitchListTile(
-                    title: Text(t.settings.general.dynamic_colors),
-                    subtitle: Text(t.settings.general.dynamic_colors_descr),
+                    title: Text(
+                      t.settings.general.dynamic_colors,
+                    ),
+                    subtitle: Text(
+                      t.settings.general.dynamic_colors_descr,
+                    ),
                     value: snapshot.data!,
                     onChanged: (bool value) {
                       if (value) {
@@ -185,10 +203,11 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
 
                       setState(() {
                         UserSettingService.instance.setSetting(
-                            SettingKey.accentColor,
-                            value
-                                ? 'auto'
-                                : brandBlue.toHex(leadingHashSign: false));
+                          SettingKey.accentColor,
+                          value
+                              ? 'auto'
+                              : brandBlue.toHex(leadingHashSign: false),
+                        );
                       });
                     },
                   );
@@ -213,13 +232,15 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
                     // ListTile but not in the ExpansionTile, so we have to do this to
                     // simulate this behaviour.
 
-                    // TODO: Track issue https://github.com/flutter/flutter/issues/135770 to refactor this code
-
                     child: Opacity(
                       opacity: snapshot.data! == 'auto' ? 0.4 : 1,
                       child: ExpansionTile(
-                        title: Text(t.settings.general.accent_color),
-                        subtitle: Text(t.settings.general.accent_color_descr),
+                        title: Text(
+                          t.settings.general.accent_color,
+                        ),
+                        subtitle: Text(
+                          t.settings.general.accent_color_descr,
+                        ),
                         controller: expTileController,
                         trailing: SizedBox(
                           height: 46,
@@ -236,7 +257,9 @@ class _AdvancedSettingsPageState extends State<AdvancedSettingsPage> {
                         children: [
                           ColorPicker(
                             colorOptions: [
-                              brandBlue.toHex(leadingHashSign: false),
+                              brandBlue.toHex(
+                                leadingHashSign: false,
+                              ),
                               ...colorOptions
                             ],
                             selectedColor: color.toHex(),

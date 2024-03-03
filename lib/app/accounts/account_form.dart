@@ -27,7 +27,7 @@ import 'package:uuid/uuid.dart';
 
 @RoutePage()
 class AccountFormPage extends StatefulWidget {
-  const AccountFormPage({Key? key, this.account}) : super(key: key);
+  const AccountFormPage({super.key, this.account});
 
   /// Account UUID to edit (if any)
   final Account? account;

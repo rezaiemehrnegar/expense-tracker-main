@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:monekin/app/currencies/exchange_rate_form.dart';
@@ -10,7 +12,6 @@ import 'package:monekin/core/presentation/widgets/currency_selector_modal.dart';
 import 'package:monekin/core/presentation/widgets/skeleton.dart';
 import 'package:monekin/core/routes/app_router.dart';
 import 'package:monekin/i18n/translations.g.dart';
-
 import '../../core/presentation/widgets/empty_indicator.dart';
 
 @RoutePage()
@@ -41,7 +42,11 @@ class _CurrencyManagerPageState extends State<CurrencyManagerPage> {
     showConfirmDialog(
       context,
       dialogTitle: t.currencies.change_preferred_currency_title,
-      contentParagraphs: [Text(t.currencies.change_preferred_currency_msg)],
+      contentParagraphs: [
+        Text(
+          t.currencies.change_preferred_currency_msg,
+        ),
+      ],
     ).then((isConfirmed) {
       if (isConfirmed != true) return;
 
@@ -64,7 +69,11 @@ class _CurrencyManagerPageState extends State<CurrencyManagerPage> {
     final t = Translations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.currencies.currency_manager)),
+      appBar: AppBar(
+        title: Text(
+          t.currencies.currency_manager,
+        ),
+      ),
       body: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +100,9 @@ class _CurrencyManagerPageState extends State<CurrencyManagerPage> {
                 CurrencySelectorModal(
                     preselectedCurrency: _userCurrency!,
                     onCurrencySelected: (newCurrency) async {
-                      await Future.delayed(const Duration(milliseconds: 250));
+                      await Future.delayed(
+                        const Duration(milliseconds: 250),
+                      );
                       changePreferredCurrency(newCurrency);
                     }),
               );
@@ -105,11 +116,14 @@ class _CurrencyManagerPageState extends State<CurrencyManagerPage> {
               children: [
                 Text(t.currencies.exchange_rates),
                 TextButton(
-                    onPressed: () async {
-                      await showExchangeRateFormDialog(
-                          context, const ExchangeRateFormDialog());
-                    },
-                    child: Text(t.general.add))
+                  onPressed: () async {
+                    await showExchangeRateFormDialog(
+                      context,
+                      const ExchangeRateFormDialog(),
+                    );
+                  },
+                  child: Text(t.general.add),
+                )
               ],
             ),
           ),
@@ -123,9 +137,11 @@ class _CurrencyManagerPageState extends State<CurrencyManagerPage> {
               if (snapshot.data!.isEmpty) {
                 // Data has loaded but is empty:
                 return Expanded(
-                    child: EmptyIndicator(
-                        title: t.general.empty_warn,
-                        description: t.currencies.empty));
+                  child: EmptyIndicator(
+                    title: t.general.empty_warn,
+                    description: t.currencies.empty,
+                  ),
+                );
               }
 
               final exchangeRates = snapshot.data!;
@@ -176,8 +192,9 @@ class _CurrencyManagerPageState extends State<CurrencyManagerPage> {
 
                         if (currency == null) return;
 
-                        onTapContext.pushRoute(
-                            ExchangeRateDetailsRoute(currency: currency));
+                        await onTapContext.pushRoute(
+                          ExchangeRateDetailsRoute(currency: currency),
+                        );
                       },
                     );
                   },
