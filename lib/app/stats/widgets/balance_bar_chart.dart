@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:collection/collection.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -29,12 +28,13 @@ class IncomeExpenseChartDataItem {
 }
 
 class BalanceBarChart extends StatefulWidget {
-  const BalanceBarChart(
-      {super.key,
-      required this.startDate,
-      required this.endDate,
-      required this.dateRange,
-      this.filters = const TransactionFilters()});
+  const BalanceBarChart({
+    super.key,
+    required this.startDate,
+    required this.endDate,
+    required this.dateRange,
+    this.filters = const TransactionFilters(),
+  });
 
   final DateTime? startDate;
   final DateTime? endDate;
@@ -97,9 +97,9 @@ class _BalanceBarChartState extends State<BalanceBarChart> {
         [25, null]
       ]) {
         shortTitles.add(
-            "${range[0].toString()}-${range[1] != null ? range[1].toString() : ''}");
+            "${range[0].toString()}-${range[1] != null ? range[1].toString() : ''}",);
 
-        startDate = DateTime(startDate!.year, startDate.month, range[0]!);
+        startDate = DateTime(startDate!.year, startDate.month, range[0]!,);
 
         DateTime endDate = DateTime(
             startDate.year,
@@ -107,7 +107,7 @@ class _BalanceBarChartState extends State<BalanceBarChart> {
             range[1] ?? 1);
 
         longTitles.add(
-            '${DateFormat.MMMd().format(startDate)} - ${DateFormat.MMMd().format(endDate)}');
+            '${DateFormat.MMMd().format(startDate)} - ${DateFormat.MMMd().format(endDate)}',);
 
         final incomeToAdd = await getIncomeData(startDate, endDate);
         final expenseToAdd = await getExpenseData(startDate, endDate);
@@ -165,7 +165,7 @@ class _BalanceBarChartState extends State<BalanceBarChart> {
       }
     } else if (range == DateRange.custom) {
       if (endDate == null) {
-        throw Exception("End date can not be null");
+        throw Exception('End date can not be null');
       }
 
       final dateDiff = endDate.difference(startDate!).inDays;

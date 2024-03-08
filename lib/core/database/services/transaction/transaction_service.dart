@@ -34,8 +34,6 @@ class TransactionService {
   Future<int> insertTransaction(TransactionInDB transaction) async {
     final toReturn = await db.into(db.transactions).insert(transaction);
 
-    // To update the getAccountsData() function results
-    // TODO: Check why we need this. The function already listen to changes in the transactions table
     db.markTablesUpdated([db.accounts]);
     return toReturn;
   }
@@ -45,8 +43,6 @@ class TransactionService {
         .into(db.transactions)
         .insert(transaction, mode: InsertMode.insertOrReplace);
 
-    // To update the getAccountsData() function results
-    // TODO: Check why we need this. The function already listen to changes in the transactions table
     db.markTablesUpdated([db.accounts]);
 
     return toReturn;
@@ -54,7 +50,9 @@ class TransactionService {
 
   Future<int> deleteTransaction(String transactionId) {
     return (db.delete(db.transactions)
-          ..where((tbl) => tbl.id.equals(transactionId)))
+          ..where(
+            (tbl) => tbl.id.equals(transactionId),
+          ))
         .go();
   }
 

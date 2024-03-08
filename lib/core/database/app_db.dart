@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -46,7 +48,7 @@ class AppDB extends _$AppDB {
     print('Executing migrations from previous version...');
 
     for (var i = from + 1; i <= to; i++) {
-      print("Migrating database from v$from to v$i...");
+      print('Migrating database from v$from to v$i...');
 
       String initialSQL =
           await rootBundle.loadString('assets/sql/migrations/v$i.sql');
@@ -124,7 +126,7 @@ class AppDB extends _$AppDB {
           await migrateDB(dbVersion, schemaVersion);
         }
 
-        print("DB Opened!");
+        print('DB Opened!');
       },
       onCreate: (m) async {
         print('Creating database tables...');

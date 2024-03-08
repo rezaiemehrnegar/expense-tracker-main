@@ -21,13 +21,14 @@ class LineChartDataItem {
 }
 
 class FundEvolutionLineChart extends StatelessWidget {
-  const FundEvolutionLineChart(
-      {super.key,
-      required this.startDate,
-      required this.endDate,
-      this.filters = const TransactionFilters(),
-      required this.dateRange,
-      this.showBalanceHeader = false});
+  const FundEvolutionLineChart({
+    super.key,
+    required this.startDate,
+    required this.endDate,
+    this.filters = const TransactionFilters(),
+    required this.dateRange,
+    this.showBalanceHeader = false,
+  });
 
   final DateTime? startDate;
   final DateTime? endDate;
@@ -49,16 +50,29 @@ class FundEvolutionLineChart extends StatelessWidget {
     final dayRange = (endDate!.difference(startDate!).inDays / 100).ceil();
 
     while (currentDay.compareTo(endDate!) < 0) {
-      labels.add(DateFormat.yMMMMd().format(currentDay));
+      labels.add(
+        DateFormat.yMMMMd().format(currentDay),
+      );
 
-      balance.add(AccountService.instance
-          .getAccountsMoney(trFilters: filters, date: currentDay));
+      balance.add(
+        AccountService.instance.getAccountsMoney(
+          trFilters: filters,
+          date: currentDay,
+        ),
+      );
 
-      currentDay = currentDay.add(Duration(days: dayRange));
+      currentDay = currentDay.add(
+        Duration(days: dayRange),
+      );
     }
 
-    return Rx.combineLatest(balance,
-        (values) => LineChartDataItem(balance: values, labels: labels));
+    return Rx.combineLatest(
+      balance,
+      (values) => LineChartDataItem(
+        balance: values,
+        labels: labels,
+      ),
+    );
   }
 
   @override
@@ -84,8 +98,9 @@ class FundEvolutionLineChart extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                          'Final balance - ${DateRangeService().getTextOfRange(startDate: startDate, endDate: endDate, dateRange: dateRange)}',
-                          style: const TextStyle(fontSize: 12)),
+                        'Final balance - ${DateRangeService().getTextOfRange(startDate: startDate, endDate: endDate, dateRange: dateRange)}',
+                        style: const TextStyle(fontSize: 12),
+                      ),
                       const Skeleton(width: 70, height: 40),
                       const Skeleton(width: 30, height: 14),
                     ],
@@ -264,7 +279,8 @@ class FundEvolutionLineChart extends StatelessWidget {
                             sideTitles: SideTitles(showTitles: false),
                           ),
                           bottomTitles: const AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
                           rightTitles: AxisTitles(
                             sideTitles: SideTitles(
                               showTitles: snapshot.hasData,

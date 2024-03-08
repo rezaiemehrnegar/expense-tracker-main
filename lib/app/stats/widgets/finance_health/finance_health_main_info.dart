@@ -4,7 +4,10 @@ import 'package:monekin/core/presentation/widgets/animated_progress_bar.dart';
 import 'package:monekin/core/services/finance_health_service.dart';
 
 class FinanceHealthMainInfo extends StatelessWidget {
-  const FinanceHealthMainInfo({super.key, required this.financeHealthData});
+  const FinanceHealthMainInfo({
+    super.key,
+    required this.financeHealthData,
+  });
 
   final FinanceHealthData financeHealthData;
 
@@ -12,8 +15,9 @@ class FinanceHealthMainInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-          maxHeight:
-              BreakPoint.of(context).isLargerThan(BreakpointID.md) ? 265 : 180),
+        maxHeight:
+            BreakPoint.of(context).isLargerThan(BreakpointID.md) ? 265 : 180,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -22,7 +26,8 @@ class FinanceHealthMainInfo extends StatelessWidget {
             direction: Axis.vertical,
             width: 16,
             color: FinanceHealthData.getHealthyValueColor(
-                financeHealthData.healthyScore),
+              financeHealthData.healthyScore,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -42,7 +47,8 @@ class FinanceHealthMainInfo extends StatelessWidget {
                               .headlineLarge!
                               .copyWith(
                                 color: FinanceHealthData.getHealthyValueColor(
-                                    financeHealthData.healthyScore),
+                                  financeHealthData.healthyScore,
+                                ),
                                 fontWeight: FontWeight.w700,
                               ),
                         ),
@@ -53,7 +59,8 @@ class FinanceHealthMainInfo extends StatelessWidget {
                       financeHealthData.getHealthyScoreReviewTitle(context),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             color: FinanceHealthData.getHealthyValueColor(
-                                financeHealthData.healthyScore),
+                              financeHealthData.healthyScore,
+                            ),
                             fontWeight: FontWeight.w700,
                           ),
                     ),

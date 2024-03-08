@@ -41,8 +41,10 @@ class _RecurrentTransactionPageState extends State<RecurrentTransactionPage> {
                   final nOfRes = snapshot.data?.numberOfRes ?? 0;
 
                   return Text(
-                    '${nOfRes} ${t.transaction.display(n: nOfRes)}',
-                    style: const TextStyle(fontWeight: FontWeight.w700),
+                    '$nOfRes ${t.transaction.display(n: nOfRes)}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
                   );
                 }),
           ),
@@ -54,8 +56,9 @@ class _RecurrentTransactionPageState extends State<RecurrentTransactionPage> {
               showGroupDivider: false,
               onEmptyList: Center(
                 child: EmptyIndicator(
-                    title: t.general.empty_warn,
-                    description: t.recurrent_transactions.empty),
+                  title: t.general.empty_warn,
+                  description: t.recurrent_transactions.empty,
+                ),
               ),
             ),
           ),
@@ -91,7 +94,9 @@ class _RecurrentTransactionPageState extends State<RecurrentTransactionPage> {
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall!
-                                  .copyWith(fontWeight: FontWeight.w300),
+                                  .copyWith(
+                                    fontWeight: FontWeight.w300,
+                                  ),
                             )
                           ],
                         ),
@@ -112,7 +117,8 @@ class _RecurrentTransactionPageState extends State<RecurrentTransactionPage> {
                                         .map(
                                           (transaction) => transaction
                                               .getUnifiedMoneyForAPeriod(
-                                                  periodicity: periodicity),
+                                            periodicity: periodicity,
+                                          ),
                                         )
                                         .sum,
                                   ),

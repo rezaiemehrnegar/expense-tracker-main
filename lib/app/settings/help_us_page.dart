@@ -39,7 +39,9 @@ class HelpUsPage extends StatelessWidget {
                           t.settings.help_us.thanks,
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
-                        Text(t.settings.help_us.thanks_long)
+                        Text(
+                          t.settings.help_us.thanks_long,
+                        )
                       ],
                     ),
                   )
@@ -50,24 +52,31 @@ class HelpUsPage extends StatelessWidget {
                 title: t.settings.help_us.rate_us,
                 subtitle: t.settings.help_us.rate_us_descr,
                 icon: Icons.star_rounded, onTap: () {
-              openExternalURL(context,
-                  'https://play.google.com/store/apps/details?id=com.monekin.app');
+              openExternalURL(
+                context,
+                'https://play.google.com/store/apps/details?id=com.monekin.app',
+              );
             }),
             createSettingItem(context,
                 title: t.settings.help_us.share,
                 subtitle: t.settings.help_us.share_descr,
                 icon: Icons.share, onTap: () {
               Share.share(
-                  '${t.settings.help_us.share_text}: https://play.google.com/store/apps/details?id=com.monekin.app');
+                '${t.settings.help_us.share_text}: https://play.google.com/store/apps/details?id=com.monekin.app',
+              );
             }),
             createSettingItem(context,
                 title: t.settings.help_us.report,
                 icon: Icons.rate_review_outlined, onTap: () {
-              openExternalURL(context,
-                  'https://github.com/enrique-lozano/Monekin/issues/new/choose');
+              openExternalURL(
+                context,
+                'https://github.com/enrique-lozano/Monekin/issues/new/choose',
+              );
             }),
             const SizedBox(height: 8),
-            DonateButton(iapConnection: iapConnection)
+            DonateButton(
+              iapConnection: iapConnection,
+            )
           ],
         ),
       ),

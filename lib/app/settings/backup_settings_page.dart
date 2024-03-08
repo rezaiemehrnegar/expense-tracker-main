@@ -19,7 +19,11 @@ class BackupSettingsPage extends StatelessWidget {
     final t = Translations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.settings.data.display)),
+      appBar: AppBar(
+        title: Text(
+          t.settings.data.display,
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 0),
         child: Column(
@@ -51,74 +55,120 @@ class BackupSettingsPage extends StatelessWidget {
                 ]),
               ),
             ), */
-            createListSeparator(context, t.backup.import.title),
+            createListSeparator(
+              context,
+              t.backup.import.title,
+            ),
             ListTile(
-              title: Text(t.backup.import.restore_backup),
-              subtitle: Text(t.backup.import.restore_backup_descr),
+              title: Text(
+                t.backup.import.restore_backup,
+              ),
+              subtitle: Text(
+                t.backup.import.restore_backup_descr,
+              ),
               minVerticalPadding: 16,
               onTap: () {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
                     title: Text(t.general.attention),
-                    content: Text(t.backup.import.restore_backup_warn),
+                    content: Text(
+                      t.backup.import.restore_backup_warn,
+                    ),
                     actions: [
                       TextButton(
-                          onPressed: () {
-                            BackupDatabaseService()
-                                .importDatabase()
-                                .then((value) {
-                              if (!value) {
-                                Navigator.pop(context);
-
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(t.backup.import.cancelled)),
-                                );
-
-                                return;
-                              }
-
-                              context.router
-                                  .replaceAll([const MainLayoutRoute()]);
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content: Text(t.backup.import.success)),
-                              );
-                            }).catchError((err) {
+                        onPressed: () {
+                          BackupDatabaseService()
+                              .importDatabase()
+                              .then((value) {
+                            if (!value) {
                               Navigator.pop(context);
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(err.toString())));
-                            });
-                          },
-                          child: Text(t.general.confirm))
+                                SnackBar(
+                                  content: Text(
+                                    t.backup.import.cancelled,
+                                  ),
+                                ),
+                              );
+
+                              return;
+                            }
+
+                            context.router.replaceAll(
+                              [
+                                const MainLayoutRoute(),
+                              ],
+                            );
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  t.backup.import.success,
+                                ),
+                              ),
+                            );
+                          }).catchError((err) {
+                            Navigator.pop(context);
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  err.toString(),
+                                ),
+                              ),
+                            );
+                          });
+                        },
+                        child: Text(
+                          t.general.confirm,
+                        ),
+                      ),
                     ],
                   ),
                 );
               },
             ),
             ListTile(
-              title: Text(t.backup.import.manual_import.title),
-              subtitle: Text(t.backup.import.manual_import.descr),
+              title: Text(
+                t.backup.import.manual_import.title,
+              ),
+              subtitle: Text(
+                t.backup.import.manual_import.descr,
+              ),
               minVerticalPadding: 16,
               onTap: () {
-                context.pushRoute(const ImportCSVRoute());
+                context.pushRoute(
+                  const ImportCSVRoute(),
+                );
               },
             ),
-            createListSeparator(context, t.backup.export.title_short),
+            createListSeparator(
+              context,
+              t.backup.export.title_short,
+            ),
             ListTile(
-              title: Text(t.backup.export.title),
-              subtitle: Text(t.backup.export.description),
+              title: Text(
+                t.backup.export.title,
+              ),
+              subtitle: Text(
+                t.backup.export.description,
+              ),
               minVerticalPadding: 16,
               onTap: () {
-                context.pushRoute(const ExportDataRoute());
+                context.pushRoute(
+                  const ExportDataRoute(),
+                );
               },
             ),
-            createListSeparator(context, t.backup.about.title),
+            createListSeparator(
+              context,
+              t.backup.about.title,
+            ),
             ListTile(
-              title: Text(t.backup.about.modify_date),
+              title: Text(
+                t.backup.about.modify_date,
+              ),
               trailing: FutureBuilder(
                   future: AppDB.instance.databasePath,
                   builder: (context, snapshot) {
@@ -129,17 +179,18 @@ class BackupSettingsPage extends StatelessWidget {
                     }
 
                     return Text(
-                      DateFormat.yMMMd()
-                          .add_Hm()
-                          .format(File(path).lastModifiedSync()),
+                      DateFormat.yMMMd().add_Hm().format(
+                            File(path).lastModifiedSync(),
+                          ),
                     );
                   }),
             ),
             ListTile(
               title: Text(t.backup.about.size),
               trailing: FutureBuilder(
-                  future: AppDB.instance.databasePath
-                      .then((value) => File(value).stat()),
+                  future: AppDB.instance.databasePath.then(
+                    (value) => File(value).stat(),
+                  ),
                   builder: (context, snapshot) {
                     final fileStats = snapshot.data;
 
@@ -147,7 +198,9 @@ class BackupSettingsPage extends StatelessWidget {
                       return const Text('----');
                     }
 
-                    return Text(fileStats.size.readableFileSize());
+                    return Text(
+                      fileStats.size.readableFileSize(),
+                    );
                   }),
             ),
           ],

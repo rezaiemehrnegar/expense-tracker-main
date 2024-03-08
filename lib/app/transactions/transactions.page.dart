@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:monekin/app/home/main_layout.dart';
@@ -14,7 +16,7 @@ import 'package:monekin/i18n/translations.g.dart';
 
 @RoutePage()
 class TransactionsPage extends StatefulWidget {
-  const TransactionsPage({Key? key, this.filters}) : super(key: key);
+  const TransactionsPage({super.key, this.filters});
 
   final TransactionFilters? filters;
 

@@ -36,9 +36,12 @@ class _TagFormPageState extends State<TagFormPage> {
   void initState() {
     super.initState();
 
-    _nameController.value = TextEditingValue(text: widget.tag?.name ?? '');
-    _descrController.value =
-        TextEditingValue(text: widget.tag?.description ?? '');
+    _nameController.value = TextEditingValue(
+      text: widget.tag?.name ?? '',
+    );
+    _descrController.value = TextEditingValue(
+      text: widget.tag?.description ?? '',
+    );
 
     _color = widget.tag?.color ?? '000000';
   }
@@ -55,16 +58,32 @@ class _TagFormPageState extends State<TagFormPage> {
 
     if (widget.tag != null) {
       await TagService.instance.updateTag(tagToEdit).then((value) {
-        messager.showSnackBar(SnackBar(content: Text(t.tags.edit_success)));
+        messager.showSnackBar(
+          SnackBar(
+            content: Text(t.tags.edit_success),
+          ),
+        );
       }).catchError((error) {
-        messager.showSnackBar(SnackBar(content: Text(error.toString())));
+        messager.showSnackBar(
+          SnackBar(
+            content: Text(
+              error.toString(),
+            ),
+          ),
+        );
       });
     } else {
       final db = AppDB.instance;
 
       final query = db.select(db.tags)
-        ..addColumns([db.tags.id.count()])
-        ..where((tbl) => tbl.name.isValue(_nameController.text));
+        ..addColumns(
+          [
+            db.tags.id.count(),
+          ],
+        )
+        ..where(
+          (tbl) => tbl.name.isValue(_nameController.text),
+        );
 
       if (await query.watchSingleOrNull().first != null) {
         messager.showSnackBar(SnackBar(
@@ -77,9 +96,21 @@ class _TagFormPageState extends State<TagFormPage> {
       await TagService.instance.insertTag(tagToEdit).then((value) {
         Navigator.pop(context);
 
-        messager.showSnackBar(SnackBar(content: Text(t.tags.create_success)));
+        messager.showSnackBar(
+          SnackBar(
+            content: Text(
+              t.tags.create_success,
+            ),
+          ),
+        );
       }).catchError((error) {
-        messager.showSnackBar(SnackBar(content: Text(error.toString())));
+        messager.showSnackBar(
+          SnackBar(
+            content: Text(
+              error.toString(),
+            ),
+          ),
+        );
       });
     }
   }
@@ -89,8 +120,11 @@ class _TagFormPageState extends State<TagFormPage> {
     final t = Translations.of(context);
 
     return Scaffold(
-      appBar:
-          AppBar(title: Text(widget.tag != null ? t.tags.edit : t.tags.add)),
+      appBar: AppBar(
+        title: Text(
+          widget.tag != null ? t.tags.edit : t.tags.add,
+        ),
+      ),
       persistentFooterButtons: [
         PersistentFooterButton(
           child: FilledButton.icon(
@@ -102,7 +136,9 @@ class _TagFormPageState extends State<TagFormPage> {
               }
             },
             icon: const Icon(Icons.check),
-            label: Text(t.general.save_changes),
+            label: Text(
+              t.general.save_changes,
+            ),
           ),
         )
       ],

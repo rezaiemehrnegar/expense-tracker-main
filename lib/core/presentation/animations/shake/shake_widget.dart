@@ -9,8 +9,8 @@ class ShakeWidget extends StatefulWidget {
     required this.duration,
     required this.shakeCount,
     required this.shakeOffset,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget child;
   final double shakeOffset;
@@ -33,7 +33,7 @@ class SineCurve extends Curve {
 }
 
 class ShakeWidgetState extends AnimationControllerState<ShakeWidget> {
-  ShakeWidgetState(Duration duration) : super(duration);
+  ShakeWidgetState(super.duration);
 
   late final Animation<double> _sineAnimation =
       Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(

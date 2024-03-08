@@ -1,5 +1,6 @@
-import 'dart:math';
+// ignore_for_file: unrelated_type_equality_checks, use_build_context_synchronously
 
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monekin/core/services/filters/custom_date_range_picker.dart';
@@ -90,13 +91,13 @@ class DateRangeService {
     return Material(
       child: DecoratedBox(
         decoration: BoxDecoration(
-            color: selected
-                ? Theme.of(context).dividerColor.withOpacity(0.2)
-                : null,
-            border: Border(
-              right: index % 2 == 0 && !selected ? border : BorderSide.none,
-              bottom: index <= 3 && !selected ? border : BorderSide.none,
-            )),
+          color:
+              selected ? Theme.of(context).dividerColor.withOpacity(0.2) : null,
+          border: Border(
+            right: index % 2 == 0 && !selected ? border : BorderSide.none,
+            bottom: index <= 3 && !selected ? border : BorderSide.none,
+          ),
+        ),
         child: InkWell(
           onTap: () {
             Navigator.pop(context, dateRange);
@@ -108,19 +109,23 @@ class DateRangeService {
               if (iconText != null)
                 Container(
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      borderRadius: BorderRadius.circular(4)),
+                    color: Theme.of(context).colorScheme.onBackground,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                   padding:
                       const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                   child: Text(
                     iconText,
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.background),
+                      color: Theme.of(context).colorScheme.background,
+                    ),
                   ),
                 ),
               if (icon != null) Icon(icon, size: 25),
               const SizedBox(height: 4),
-              Text(dateRange.periodicityText(context))
+              Text(
+                dateRange.periodicityText(context),
+              )
             ],
           ),
         ),
@@ -151,7 +156,10 @@ class DateRangeService {
       throw Exception('startMonth or endMonth not setted correctly');
     }
 
-    return [DateTime(currentYear, startMonth), DateTime(currentYear, endMonth)];
+    return [
+      DateTime(currentYear, startMonth),
+      DateTime(currentYear, endMonth),
+    ];
   }
 
   /// If [dateRange] is null, the current value of the selectedDateRange will be used
@@ -203,8 +211,16 @@ class DateRangeService {
       endDate = DateTime(currentYear, currentMonth + 1, 1);
     } else if (selectedDateRange == DateRange.weekly) {
       final now = DateTime.now();
-      startDate = now.subtract(Duration(days: now.weekday - 1));
-      endDate = now.add(Duration(days: DateTime.daysPerWeek - now.weekday));
+      startDate = now.subtract(
+        Duration(
+          days: now.weekday - 1,
+        ),
+      );
+      endDate = now.add(
+        Duration(
+          days: DateTime.daysPerWeek - now.weekday,
+        ),
+      );
     } else if (selectedDateRange == DateRange.quaterly) {
       final quarters = _getQuaterlyDates();
 
@@ -284,71 +300,72 @@ class DateRangeService {
       context: context,
       builder: (context) {
         return Align(
-            child: ConstrainedBox(
-          constraints: BoxConstraints(
-            maxWidth: min(MediaQuery.of(context).size.width * 0.75, 450),
-            maxHeight: MediaQuery.of(context).size.height * 0.75,
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AppBar(
-                  title: Text(t.general.time.ranges.display),
-                  centerTitle: true,
-                  automaticallyImplyLeading: false,
-                  elevation: 4,
-                ),
-                GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio:
-                      MediaQuery.of(context).size.height < 550 ? 3 : 1.8,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    _buildDateButton(
-                      context,
-                      index: 0,
-                      icon: Icons.calendar_month,
-                      dateRange: DateRange.custom,
-                    ),
-                    _buildDateButton(
-                      context,
-                      index: 1,
-                      icon: Icons.all_inclusive,
-                      dateRange: DateRange.infinite,
-                    ),
-                    _buildDateButton(
-                      context,
-                      dateRange: DateRange.annualy,
-                      index: 2,
-                      iconText: '365',
-                    ),
-                    _buildDateButton(
-                      context,
-                      dateRange: DateRange.quaterly,
-                      index: 3,
-                      iconText: '90',
-                    ),
-                    _buildDateButton(
-                      context,
-                      dateRange: DateRange.monthly,
-                      index: 4,
-                      iconText: '30',
-                    ),
-                    _buildDateButton(
-                      context,
-                      dateRange: DateRange.weekly,
-                      index: 5,
-                      iconText: '7',
-                    ),
-                  ],
-                ),
-              ],
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: min(MediaQuery.of(context).size.width * 0.75, 450),
+              maxHeight: MediaQuery.of(context).size.height * 0.75,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppBar(
+                    title: Text(t.general.time.ranges.display),
+                    centerTitle: true,
+                    automaticallyImplyLeading: false,
+                    elevation: 4,
+                  ),
+                  GridView.count(
+                    crossAxisCount: 2,
+                    childAspectRatio:
+                        MediaQuery.of(context).size.height < 550 ? 3 : 1.8,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      _buildDateButton(
+                        context,
+                        index: 0,
+                        icon: Icons.calendar_month,
+                        dateRange: DateRange.custom,
+                      ),
+                      _buildDateButton(
+                        context,
+                        index: 1,
+                        icon: Icons.all_inclusive,
+                        dateRange: DateRange.infinite,
+                      ),
+                      _buildDateButton(
+                        context,
+                        dateRange: DateRange.annualy,
+                        index: 2,
+                        iconText: '365',
+                      ),
+                      _buildDateButton(
+                        context,
+                        dateRange: DateRange.quaterly,
+                        index: 3,
+                        iconText: '90',
+                      ),
+                      _buildDateButton(
+                        context,
+                        dateRange: DateRange.monthly,
+                        index: 4,
+                        iconText: '30',
+                      ),
+                      _buildDateButton(
+                        context,
+                        dateRange: DateRange.weekly,
+                        index: 5,
+                        iconText: '7',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ));
+        );
       },
     );
 

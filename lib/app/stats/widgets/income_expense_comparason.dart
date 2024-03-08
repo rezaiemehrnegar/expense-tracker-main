@@ -10,11 +10,12 @@ import 'package:monekin/i18n/translations.g.dart';
 import 'package:rxdart/rxdart.dart';
 
 class IncomeExpenseComparason extends StatelessWidget {
-  const IncomeExpenseComparason(
-      {super.key,
-      this.startDate,
-      this.endDate,
-      this.filters = const TransactionFilters()});
+  const IncomeExpenseComparason({
+    super.key,
+    this.startDate,
+    this.endDate,
+    this.filters = const TransactionFilters(),
+  });
 
   final DateTime? startDate;
   final DateTime? endDate;
@@ -29,31 +30,34 @@ class IncomeExpenseComparason extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(12),
-          child: Row(children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(t.general.balance),
-                StreamBuilder(
-                  stream: AccountService.instance.getAccountsBalance(
-                    filters: filters.copyWith(
-                      minDate: startDate,
-                      maxDate: endDate,
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(t.general.balance),
+                  StreamBuilder(
+                    stream: AccountService.instance.getAccountsBalance(
+                      filters: filters.copyWith(
+                        minDate: startDate,
+                        maxDate: endDate,
+                      ),
                     ),
-                  ),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Skeleton(width: 35, height: 32);
-                    }
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Skeleton(width: 35, height: 32);
+                      }
 
-                    return CurrencyDisplayer(
+                      return CurrencyDisplayer(
                         amountToConvert: snapshot.data!,
-                        textStyle: Theme.of(context).textTheme.headlineSmall!);
-                  },
-                )
-              ],
-            )
-          ]),
+                        textStyle: Theme.of(context).textTheme.headlineSmall!,
+                      );
+                    },
+                  )
+                ],
+              )
+            ],
+          ),
         ),
         StreamBuilder(
           stream: Rx.combineLatest2(
@@ -80,18 +84,20 @@ class IncomeExpenseComparason extends StatelessWidget {
             final income = snapshot.data![0];
             final expense = snapshot.data![1].abs();
 
-            return Column(children: [
-              IncomeExpenseTile(
-                type: TransactionType.income,
-                value: income,
-                total: income + expense,
-              ),
-              IncomeExpenseTile(
-                type: TransactionType.expense,
-                value: expense,
-                total: income + expense,
-              ),
-            ]);
+            return Column(
+              children: [
+                IncomeExpenseTile(
+                  type: TransactionType.income,
+                  value: income,
+                  total: income + expense,
+                ),
+                IncomeExpenseTile(
+                  type: TransactionType.expense,
+                  value: expense,
+                  total: income + expense,
+                ),
+              ],
+            );
           },
         ),
       ],
@@ -127,17 +133,22 @@ class IncomeExpenseTile extends StatelessWidget {
           color: type.color(context),
         ),
       ),
-      title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(type == TransactionType.expense
-                ? t.transaction.types.expense(n: 1)
-                : t.transaction.types.income(n: 1)),
-            CurrencyDisplayer(amountToConvert: value)
-          ],
-        ),
-      ]),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                type == TransactionType.expense
+                    ? t.transaction.types.expense(n: 1)
+                    : t.transaction.types.income(n: 1),
+              ),
+              CurrencyDisplayer(amountToConvert: value)
+            ],
+          ),
+        ],
+      ),
       subtitle: AnimatedProgressBar(
         value: total > 0 ? (value / total) : 0,
         color: type.color(context),

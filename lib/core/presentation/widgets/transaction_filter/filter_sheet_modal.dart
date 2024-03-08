@@ -567,7 +567,7 @@ class _FilterSheetModalState extends State<FilterSheetModal> {
                                                       .whereNot((element) =>
                                                           element.id == tag.id)
                                                       .map((e) => e.id)
-                                                      .toList()
+                                                      
                                                 ];
                                               } else if (value) {
                                                 newListToAssign.add(tag.id);

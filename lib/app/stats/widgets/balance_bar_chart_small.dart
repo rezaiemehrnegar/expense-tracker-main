@@ -26,7 +26,9 @@ class _BalanceChartSmallState extends State<BalanceChartSmall> {
     const double width = 56;
 
     const radius = BorderRadius.vertical(
-        bottom: Radius.zero, top: Radius.circular(width / 6));
+      bottom: Radius.zero,
+      top: Radius.circular(width / 6),
+    );
 
     return BarChartGroupData(
       barsSpace: 4,
@@ -60,30 +62,35 @@ class _BalanceChartSmallState extends State<BalanceChartSmall> {
     return FlTitlesData(
       show: true,
       rightTitles: AxisTitles(
-          sideTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 32,
-        getTitlesWidget: (value, meta) {
-          return Row(
-            children: [
-              Container(
-                width: 5,
-                height: 1,
-                color: borderColor,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                meta.formattedValue,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w300,
+        sideTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 32,
+          getTitlesWidget: (value, meta) {
+            return Row(
+              children: [
+                Container(
+                  width: 5,
+                  height: 1,
+                  color: borderColor,
                 ),
-              ),
-            ],
-          );
-        },
-      )),
-      topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                const SizedBox(width: 4),
+                Text(
+                  meta.formattedValue,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+      topTitles: const AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: false,
+        ),
+      ),
       bottomTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
@@ -99,7 +106,11 @@ class _BalanceChartSmallState extends State<BalanceChartSmall> {
           },
         ),
       ),
-      leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      leftTitles: const AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: false,
+        ),
+      ),
     );
   }
 
@@ -133,62 +144,82 @@ class _BalanceChartSmallState extends State<BalanceChartSmall> {
                           getTooltipItem: (a, b, c, d) => null,
                         ),
                       ),
-                      titlesData: getTitlesData(ultraLightBorderColor),
+                      titlesData: getTitlesData(
+                        ultraLightBorderColor,
+                      ),
                       borderData: FlBorderData(
                         show: true,
                         border: Border(
                           bottom: BorderSide(
-                              width: 1, color: ultraLightBorderColor),
+                            width: 1,
+                            color: ultraLightBorderColor,
+                          ),
                         ),
                       ),
                       barGroups: [
-                        makeGroupData(0, 4, 2,
-                            disabled: true, colors: CustomColors.of(context)),
-                        makeGroupData(1, 5, 7,
-                            disabled: true, colors: CustomColors.of(context)),
+                        makeGroupData(
+                          0,
+                          4,
+                          2,
+                          disabled: true,
+                          colors: CustomColors.of(context),
+                        ),
+                        makeGroupData(
+                          1,
+                          5,
+                          7,
+                          disabled: true,
+                          colors: CustomColors.of(context),
+                        ),
                       ],
                       gridData: const FlGridData(show: false),
                     ),
                   ),
                   Positioned.fill(
                     child: Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          t.general.insufficient_data,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        )),
+                      alignment: Alignment.center,
+                      child: Text(
+                        t.general.insufficient_data,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
                   )
                 ],
               );
             }
 
             return StreamBuilder(
-                stream: StreamZip([
-                  AccountService.instance.getAccountsBalance(
+                stream: StreamZip(
+                  [
+                    AccountService.instance.getAccountsBalance(
+                        filters: TransactionFilters(
+                      transactionTypes: [TransactionType.expense],
+                      minDate: widget.dateRangeService.getDateRange(-1)[0],
+                      maxDate: widget.dateRangeService.getDateRange(-1)[1],
+                    )),
+                    AccountService.instance.getAccountsBalance(
                       filters: TransactionFilters(
-                    transactionTypes: [TransactionType.expense],
-                    minDate: widget.dateRangeService.getDateRange(-1)[0],
-                    maxDate: widget.dateRangeService.getDateRange(-1)[1],
-                  )),
-                  AccountService.instance.getAccountsBalance(
+                        transactionTypes: [TransactionType.income],
+                        minDate: widget.dateRangeService.getDateRange(-1)[0],
+                        maxDate: widget.dateRangeService.getDateRange(-1)[1],
+                      ),
+                    ),
+                    AccountService.instance.getAccountsBalance(
                       filters: TransactionFilters(
-                    transactionTypes: [TransactionType.income],
-                    minDate: widget.dateRangeService.getDateRange(-1)[0],
-                    maxDate: widget.dateRangeService.getDateRange(-1)[1],
-                  )),
-                  AccountService.instance.getAccountsBalance(
+                        transactionTypes: [TransactionType.expense],
+                        minDate: widget.dateRangeService.startDate,
+                        maxDate: widget.dateRangeService.endDate,
+                      ),
+                    ),
+                    AccountService.instance.getAccountsBalance(
                       filters: TransactionFilters(
-                    transactionTypes: [TransactionType.expense],
-                    minDate: widget.dateRangeService.startDate,
-                    maxDate: widget.dateRangeService.endDate,
-                  )),
-                  AccountService.instance.getAccountsBalance(
-                      filters: TransactionFilters(
-                    transactionTypes: [TransactionType.income],
-                    minDate: widget.dateRangeService.startDate,
-                    maxDate: widget.dateRangeService.endDate,
-                  )),
-                ]),
+                        transactionTypes: [TransactionType.income],
+                        minDate: widget.dateRangeService.startDate,
+                        maxDate: widget.dateRangeService.endDate,
+                      ),
+                    ),
+                  ],
+                ),
                 builder: (context, snapshpot) {
                   if (!snapshpot.hasData) {
                     return const CircularProgressIndicator();
@@ -203,23 +234,35 @@ class _BalanceChartSmallState extends State<BalanceChartSmall> {
                           getTooltipItem: (a, b, c, d) => null,
                         ),
                       ),
-                      titlesData: getTitlesData(ultraLightBorderColor),
+                      titlesData: getTitlesData(
+                        ultraLightBorderColor,
+                      ),
                       borderData: FlBorderData(
                         show: true,
                         border: Border(
                           bottom: BorderSide(
-                              width: 1, color: ultraLightBorderColor),
+                            width: 1,
+                            color: ultraLightBorderColor,
+                          ),
                           right: BorderSide(
-                              width: 1, color: ultraLightBorderColor),
+                            width: 1,
+                            color: ultraLightBorderColor,
+                          ),
                         ),
                       ),
                       barGroups: [
                         makeGroupData(
-                            0, -snapshpot.data![0], snapshpot.data![1],
-                            colors: CustomColors.of(context)),
+                          0,
+                          -snapshpot.data![0],
+                          snapshpot.data![1],
+                          colors: CustomColors.of(context),
+                        ),
                         makeGroupData(
-                            1, -snapshpot.data![2], snapshpot.data![3],
-                            colors: CustomColors.of(context)),
+                          1,
+                          -snapshpot.data![2],
+                          snapshpot.data![3],
+                          colors: CustomColors.of(context),
+                        ),
                       ],
                       gridData: const FlGridData(show: false),
                     ),

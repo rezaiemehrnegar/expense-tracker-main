@@ -26,13 +26,14 @@ class TrDistributionChartItem<T> {
 }
 
 class ChartByCategories extends StatefulWidget {
-  const ChartByCategories(
-      {super.key,
-      required this.startDate,
-      required this.endDate,
-      this.showList = false,
-      this.initialSelectedType = TransactionType.expense,
-      this.filters = const TransactionFilters()});
+  const ChartByCategories({
+    super.key,
+    required this.startDate,
+    required this.endDate,
+    this.showList = false,
+    this.initialSelectedType = TransactionType.expense,
+    this.filters = const TransactionFilters(),
+  });
 
   final DateTime? startDate;
   final DateTime? endDate;
@@ -73,15 +74,19 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
     final transactionService = TransactionService.instance;
 
     final transactions = await transactionService
-        .getTransactions(filters: _getTransactionFilters())
+        .getTransactions(
+          filters: _getTransactionFilters(),
+        )
         .first;
 
     for (final transaction in transactions) {
       final trValue = transaction.currentValueInPreferredCurrency.abs();
 
-      final categoryToEdit = data.firstWhereOrNull((cat) =>
-          cat.category.id == transaction.category?.id ||
-          cat.category.id == transaction.category?.parentCategoryID);
+      final categoryToEdit = data.firstWhereOrNull(
+        (cat) =>
+            cat.category.id == transaction.category?.id ||
+            cat.category.id == transaction.category?.parentCategoryID,
+      );
 
       if (categoryToEdit != null) {
         categoryToEdit.value += trValue;
@@ -89,18 +94,23 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
       } else {
         data.add(
           TrDistributionChartItem(
-              category: transaction.category!.parentCategoryID == null
-                  ? Category.fromDB(transaction.category!, null)
-                  : (await CategoryService.instance
-                      .getCategoryById(transaction.category!.parentCategoryID!)
-                      .first)!,
-              transactions: [transaction],
-              value: trValue),
+            category: transaction.category!.parentCategoryID == null
+                ? Category.fromDB(transaction.category!, null)
+                : (await CategoryService.instance
+                    .getCategoryById(
+                      transaction.category!.parentCategoryID!,
+                    )
+                    .first)!,
+            transactions: [transaction],
+            value: trValue,
+          ),
         );
       }
     }
 
-    data.sort((a, b) => b.value.compareTo(a.value));
+    data.sort(
+      (a, b) => b.value.compareTo(a.value),
+    );
     return data;
   }
 
@@ -115,24 +125,29 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
     const limit = 0.05;
 
     final unimportantItems = data.where(
-        (element) => getElementPercentageInTotal(element.value, data) < limit);
+      (element) => getElementPercentageInTotal(element.value, data) < limit,
+    );
 
     if (unimportantItems.length <= 1) return data;
 
     final toReturn = data
-        .where((element) =>
-            getElementPercentageInTotal(element.value, data) >= limit)
+        .where(
+          (element) =>
+              getElementPercentageInTotal(element.value, data) >= limit,
+        )
         .toList();
 
     final toAdd = TrDistributionChartItem(
-        value: 0,
-        transactions: [],
-        category: Category(
-            id: 'Other',
-            name: 'Other',
-            iconId: 'iconId',
-            type: CategoryType.B,
-            color: 'DEDEDE'));
+      value: 0,
+      transactions: [],
+      category: Category(
+        id: 'Other',
+        name: 'Other',
+        iconId: 'iconId',
+        type: CategoryType.B,
+        color: 'DEDEDE',
+      ),
+    );
 
     for (final item in unimportantItems) {
       toAdd.value += item.value;
@@ -196,9 +211,7 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
             color: color,
           ),
         ),
-        const SizedBox(
-          width: 4,
-        ),
+        const SizedBox(width: 4),
         Text(
           text,
           style: TextStyle(
@@ -238,11 +251,15 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
                 segments: [
                   ButtonSegment(
                     value: TransactionType.expense,
-                    label: Text(t.transaction.types.expense(n: 1)),
+                    label: Text(
+                      t.transaction.types.expense(n: 1),
+                    ),
                   ),
                   ButtonSegment(
                     value: TransactionType.income,
-                    label: Text(t.transaction.types.income(n: 1)),
+                    label: Text(
+                      t.transaction.types.income(n: 1),
+                    ),
                   ),
                 ],
                 showSelectedIcon: false,
@@ -287,11 +304,12 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
                   if (snapshot.data!.isEmpty)
                     Positioned.fill(
                       child: Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            t.general.insufficient_data,
-                            style: Theme.of(context).textTheme.titleLarge,
-                          )),
+                        alignment: Alignment.center,
+                        child: Text(
+                          t.general.insufficient_data,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
                     ),
                 ],
               ),
@@ -308,10 +326,13 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
                 runSpacing: 2, // gap between lines
                 alignment: WrapAlignment.center,
                 children: filteredDataItems
-                    .map((e) => indicator(
+                    .map(
+                      (e) => indicator(
                         color: ColorHex.get(e.category.color),
                         text: e.category.name,
-                        isSquare: false))
+                        isSquare: false,
+                      ),
+                    )
                     .toList(),
               ),
             ),
@@ -344,9 +365,14 @@ class _ChartByCategoriesState extends State<ChartByCategories> {
                               .toLowerCase(),
                         ),
                         Text(
-                            NumberFormat.decimalPercentPattern(decimalDigits: 2)
-                                .format(getElementPercentageInTotal(
-                                    dataCategory.value, snapshot.data!)))
+                          NumberFormat.decimalPercentPattern(decimalDigits: 2)
+                              .format(
+                            getElementPercentageInTotal(
+                              dataCategory.value,
+                              snapshot.data!,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     leading: dataCategory.category.icon.displayFilled(

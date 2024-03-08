@@ -1073,7 +1073,6 @@ class _TransactionFormPageState extends State<TransactionFormPage> {
       isScrollControlled: true,
       builder: (context) => DraggableScrollableSheet(
           expand: false,
-          // TODO: Is this working? See: https://github.com/flutter/flutter/issues/127236
           // shouldCloseOnMinExtent: false,
           snap: true,
           maxChildSize: 1,

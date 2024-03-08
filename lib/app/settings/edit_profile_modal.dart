@@ -56,10 +56,13 @@ class _EditProfileModalState extends State<EditProfileModal> {
     final t = Translations.of(context);
 
     return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Container(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,46 +92,55 @@ class _EditProfileModalState extends State<EditProfileModal> {
                   runSpacing: 12, // gap between lines
                   alignment: WrapAlignment.center,
                   children: allAvatars
-                      .map((e) => InkWell(
-                            onTap: () {
-                              HapticFeedback.lightImpact();
-                              setState(() {
-                                selectedAvatar = e;
-                              });
-                            },
-                            child: UserAvatar(
-                              avatar: e,
-                              size: 52,
-                              border: selectedAvatar == e
-                                  ? Border.all(width: 2, color: colors.primary)
-                                  : Border.all(
-                                      width: 2, color: Colors.transparent),
-                            ),
-                          ))
+                      .map(
+                        (e) => InkWell(
+                          onTap: () {
+                            HapticFeedback.lightImpact();
+                            setState(() {
+                              selectedAvatar = e;
+                            });
+                          },
+                          child: UserAvatar(
+                            avatar: e,
+                            size: 52,
+                            border: selectedAvatar == e
+                                ? Border.all(
+                                    width: 2,
+                                    color: colors.primary,
+                                  )
+                                : Border.all(
+                                    width: 2,
+                                    color: Colors.transparent,
+                                  ),
+                          ),
+                        ),
+                      )
                       .toList(),
                 ),
               ],
-            )),
-        BottomSheetFooter(
-            onSaved: selectedAvatar == null
-                ? null
-                : () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
+            ),
+          ),
+          BottomSheetFooter(
+              onSaved: selectedAvatar == null
+                  ? null
+                  : () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
 
-                      final userSettingsService = UserSettingService.instance;
+                        final userSettingsService = UserSettingService.instance;
 
-                      Future.wait([
-                        userSettingsService.setSetting(
-                            SettingKey.userName, _nameController.text),
-                        userSettingsService.setSetting(
-                            SettingKey.avatar, selectedAvatar!)
-                      ].map((e) => Future.value(e))).then((value) {
-                        Navigator.pop(context);
-                      });
-                    }
-                  })
-      ]),
+                        Future.wait([
+                          userSettingsService.setSetting(
+                              SettingKey.userName, _nameController.text),
+                          userSettingsService.setSetting(
+                              SettingKey.avatar, selectedAvatar!)
+                        ].map((e) => Future.value(e))).then((value) {
+                          Navigator.pop(context);
+                        });
+                      }
+                    })
+        ],
+      ),
     );
   }
 }

@@ -657,7 +657,7 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                                     if (transaction.tags.isNotEmpty) ...[
                                       const Divider(indent: 12),
                                       ListTile(
-                                        title: Text("Tags"),
+                                        title: const Text('Tags'),
                                         subtitle: Padding(
                                           padding:
                                               const EdgeInsets.only(top: 4),

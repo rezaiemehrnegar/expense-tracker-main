@@ -23,7 +23,10 @@ class AboutPage extends StatelessWidget {
       trailing: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.arrow_forward_ios, size: 14),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 14,
+          ),
         ],
       ),
       onTap: onTap,
@@ -35,7 +38,11 @@ class AboutPage extends StatelessWidget {
     final t = Translations.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.settings.about_us.display)),
+      appBar: AppBar(
+        title: Text(
+          t.settings.about_us.display,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,8 +92,8 @@ class AboutPage extends StatelessWidget {
                                       .textTheme
                                       .labelSmall!
                                       .copyWith(
-                                          color:
-                                              Theme.of(context).primaryColor),
+                                        color: Theme.of(context).primaryColor,
+                                      ),
                                 ),
                               ],
                             );
@@ -96,38 +103,55 @@ class AboutPage extends StatelessWidget {
                 ),
               ),
             ),
-            createListSeparator(context, t.settings.about_us.project.display),
+            createListSeparator(
+              context,
+              t.settings.about_us.project.display,
+            ),
             buildLinkItem(
               t.settings.about_us.project.contributors,
               subtitle: t.settings.about_us.project.contributors_descr,
               onTap: () {
-                openExternalURL(context,
-                    'https://github.com/enrique-lozano/Monekin/graphs/contributors');
+                openExternalURL(
+                  context,
+                  'https://github.com/enrique-lozano/Monekin/graphs/contributors',
+                );
               },
             ),
             buildLinkItem(
               t.settings.help_us.report,
               onTap: () {
-                openExternalURL(context,
-                    'https://github.com/enrique-lozano/Monekin/issues/new/choose');
+                openExternalURL(
+                  context,
+                  'https://github.com/enrique-lozano/Monekin/issues/new/choose',
+                );
               },
             ),
             buildLinkItem(t.settings.about_us.project.contact, onTap: () {
-              openExternalURL(context, 'mailto:lozin.technologies@gmail.com');
+              openExternalURL(
+                context,
+                'mailto:lozin.technologies@gmail.com',
+              );
             }),
-            createListSeparator(context, t.settings.about_us.legal.display),
+            createListSeparator(
+              context,
+              t.settings.about_us.legal.display,
+            ),
             buildLinkItem(
               t.settings.about_us.legal.terms,
               onTap: () {
-                openExternalURL(context,
-                    'https://github.com/enrique-lozano/Monekin/blob/main/docs/TERMS_OF_USE.md');
+                openExternalURL(
+                  context,
+                  'https://github.com/enrique-lozano/Monekin/blob/main/docs/TERMS_OF_USE.md',
+                );
               },
             ),
             buildLinkItem(
               t.settings.about_us.legal.privacy,
               onTap: () {
-                openExternalURL(context,
-                    'https://github.com/enrique-lozano/Monekin/blob/main/docs/PRIVACY_POLICY.md');
+                openExternalURL(
+                  context,
+                  'https://github.com/enrique-lozano/Monekin/blob/main/docs/PRIVACY_POLICY.md',
+                );
               },
             ),
             buildLinkItem(
@@ -142,7 +166,10 @@ class AboutPage extends StatelessWidget {
                 }
 
                 final info = await PackageInfo.fromPlatform();
-                openLicense(appName: info.appName, version: info.version);
+                openLicense(
+                  appName: info.appName,
+                  version: info.version,
+                );
               },
             ),
           ],

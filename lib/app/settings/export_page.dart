@@ -72,9 +72,10 @@ class _ExportDataPageState extends State<ExportDataPage> {
                 Text(
                   title,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: isSelected
-                          ? Theme.of(context).colorScheme.primary
-                          : Theme.of(context).colorScheme.onSurfaceVariant),
+                        color: isSelected
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                 ),
                 Text(
                   descr,
@@ -127,41 +128,44 @@ class _ExportDataPageState extends State<ExportDataPage> {
       ),
       persistentFooterButtons: [
         PersistentFooterButton(
-            child: FilledButton(
-          child: Text(t.backup.export.title),
-          onPressed: () async {
-            final messeger = ScaffoldMessenger.of(context);
+          child: FilledButton(
+            child: Text(t.backup.export.title),
+            onPressed: () async {
+              final messeger = ScaffoldMessenger.of(context);
 
-            if (selectedExportFormat == _ExportFormats.db) {
-              await BackupDatabaseService()
-                  .downloadDatabaseFile(context)
-                  .then((value) {
-                print('EEEEEEEEEEE');
-              }).catchError((err) {
-                print(err);
-              });
-            } else {
-              await BackupDatabaseService()
-                  .exportSpreadsheet(context,
-                      await TransactionService.instance.getTransactions().first)
-                  .then((value) {
-                messeger.showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Fichero descargado con exito en $value',
+              if (selectedExportFormat == _ExportFormats.db) {
+                await BackupDatabaseService()
+                    .downloadDatabaseFile(context)
+                    .then((value) {
+                  print('EEEEEEEEEEE');
+                }).catchError((err) {
+                  print(err);
+                });
+              } else {
+                await BackupDatabaseService()
+                    .exportSpreadsheet(
+                  context,
+                  await TransactionService.instance.getTransactions().first,
+                )
+                    .then((value) {
+                  messeger.showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Fichero descargado con exito en $value',
+                      ),
                     ),
-                  ),
-                );
-              }).catchError((err) {
-                messeger.showSnackBar(
-                  SnackBar(
-                    content: Text('$err'),
-                  ),
-                );
-              });
-            }
-          },
-        ))
+                  );
+                }).catchError((err) {
+                  messeger.showSnackBar(
+                    SnackBar(
+                      content: Text('$err'),
+                    ),
+                  );
+                });
+              }
+            },
+          ),
+        ),
       ],
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 12, bottom: 16),

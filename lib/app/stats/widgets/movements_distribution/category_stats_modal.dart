@@ -28,8 +28,11 @@ class SubcategoryModalItem {
 }
 
 class CategoryStatsModal extends StatelessWidget {
-  const CategoryStatsModal(
-      {super.key, required this.categoryData, required this.filters});
+  const CategoryStatsModal({
+    super.key,
+    required this.categoryData,
+    required this.filters,
+  });
 
   final TrDistributionChartItem<Category> categoryData;
   final TransactionFilters filters;
@@ -48,24 +51,30 @@ class CategoryStatsModal extends StatelessWidget {
 
       final trValue = await ExchangeRateService.instance
           .calculateExchangeRateToPreferredCurrency(
-              fromCurrency: transaction.account.currencyId,
-              amount: transaction.value.abs())
+            fromCurrency: transaction.account.currencyId,
+            amount: transaction.value.abs(),
+          )
           .first;
 
       if (categoryToEdit != null) {
         categoryToEdit.value += trValue;
       } else {
-        subcategories.add(SubcategoryModalItem(
+        subcategories.add(
+          SubcategoryModalItem(
             id: transaction.category!.id,
             name: transaction.category!.isMainCategory
                 ? notBelongToAnySubcatName
                 : transaction.category!.name,
             icon: transaction.category!.icon,
-            value: trValue));
+            value: trValue,
+          ),
+        );
       }
     }
 
-    return subcategories.sorted((a, b) => b.value.compareTo(a.value));
+    return subcategories.sorted(
+      (a, b) => b.value.compareTo(a.value),
+    );
   }
 
   @override
@@ -86,7 +95,9 @@ class CategoryStatsModal extends StatelessWidget {
                   Row(
                     children: [
                       categoryData.category.icon.displayFilled(
-                          color: ColorHex.get(categoryData.category.color),
+                          color: ColorHex.get(
+                            categoryData.category.color,
+                          ),
                           size: 34),
                       const SizedBox(width: 16),
                       Column(
@@ -126,7 +137,9 @@ class CategoryStatsModal extends StatelessWidget {
                       startDate: filters.minDate,
                       endDate: filters.maxDate,
                     ),
-                    style: const TextStyle(fontWeight: FontWeight.w300),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
                   CurrencyDisplayer(
                     amountToConvert: categoryData.value,
@@ -160,7 +173,8 @@ class CategoryStatsModal extends StatelessWidget {
                       children: [
                         Text(subcategoryData.name),
                         CurrencyDisplayer(
-                            amountToConvert: subcategoryData.value)
+                          amountToConvert: subcategoryData.value,
+                        )
                       ],
                     ),
                     subtitle: AnimatedProgressBar(

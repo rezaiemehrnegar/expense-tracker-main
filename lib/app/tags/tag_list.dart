@@ -129,7 +129,8 @@ class _TagListPageState extends State<TagListPage> {
               children: [
                 buildList(),
                 ScrollableWithBottomGradient.buildPositionedGradient(
-                    Theme.of(context).dialogBackgroundColor)
+                  Theme.of(context).dialogBackgroundColor,
+                )
               ],
             ),
           ),
@@ -141,10 +142,16 @@ class _TagListPageState extends State<TagListPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(t.tags.display(n: 10))),
+      appBar: AppBar(
+        title: Text(
+          t.tags.display(n: 10),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_rounded),
-        onPressed: () => context.pushRoute(TagFormRoute()),
+        onPressed: () => context.pushRoute(
+          TagFormRoute(),
+        ),
       ),
       body: buildList(),
     );

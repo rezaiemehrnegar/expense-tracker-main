@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 const double _kPanelHeaderCollapsedHeight = kMinInteractiveDimension;
-const EdgeInsets _kPanelHeaderExpandedDefaultPadding = EdgeInsets.symmetric(
-  vertical: 64.0 - _kPanelHeaderCollapsedHeight,
-);
 
 class _SaltedKey<S, V> extends LocalKey {
   const _SaltedKey(this.salt, this.value);
@@ -36,7 +33,7 @@ class ExpansionPanelListWithoutIcon extends StatefulWidget {
   ///
   /// The [children] and [animationDuration] arguments must not be null.
   const ExpansionPanelListWithoutIcon({
-    Key? key,
+    super.key,
     required this.children,
     this.expansionCallback,
     this.animationDuration = kThemeAnimationDuration,
@@ -44,8 +41,7 @@ class ExpansionPanelListWithoutIcon extends StatefulWidget {
     this.dividerColor,
     this.elevation = 2,
   })  : _allowOnlyOnePanelOpen = false,
-        initialOpenPanelValue = null,
-        super(key: key);
+        initialOpenPanelValue = null;
 
   /// The children of the expansion panel list. They are laid out in a similar
   /// fashion to [ListBody].
@@ -173,8 +169,9 @@ class _ExpansionPanelListWithoutIconState
             widget.children[childIndex] as ExpansionPanelRadio;
         if (widget.expansionCallback != null &&
             childIndex != index &&
-            child.value == _currentOpenPanel?.value)
+            child.value == _currentOpenPanel?.value) {
           widget.expansionCallback!(childIndex, false);
+        }
       }
 
       setState(() {
@@ -286,9 +283,10 @@ class _ExpansionPanelListWithoutIconState
         ),
       );
 
-      if (_isChildExpanded(index) && index != widget.children.length - 1)
+      if (_isChildExpanded(index) && index != widget.children.length - 1) {
         items.add(MaterialGap(
             key: _SaltedKey<BuildContext, int>(context, index * 2 + 1)));
+      }
     }
 
     return MergeableMaterial(

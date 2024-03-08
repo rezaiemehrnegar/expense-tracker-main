@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
-
 import 'package:csv/csv.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +29,13 @@ class BackupDatabaseService {
 
     await downloadFile.writeAsBytes(dbFileInBytes);
 
-    messeger.showSnackBar(SnackBar(
-      content: Text('Base de datos descargada con exito en $downloadPath'),
-    ));
+    messeger.showSnackBar(
+      SnackBar(
+        content: Text(
+          'Base de datos descargada con exito en $downloadPath',
+        ),
+      ),
+    );
   }
 
   Future<String> exportSpreadsheet(
@@ -63,7 +66,9 @@ class BackupDatabaseService {
 
     csvData += '\n';
 
-    final dateFormatter = DateFormat('yyyy-MM-dd HH:mm:ss');
+    final dateFormatter = DateFormat(
+      'yyyy-MM-dd HH:mm:ss',
+    );
 
     for (final transaction in data) {
       final toAdd = [
@@ -140,8 +145,10 @@ class BackupDatabaseService {
       final currentDBContent = await File(dbPath).readAsBytes();
 
       // Load the new database
-      await File(dbPath)
-          .writeAsBytes(await selectedFile.readAsBytes(), mode: FileMode.write);
+      await File(dbPath).writeAsBytes(
+        await selectedFile.readAsBytes(),
+        mode: FileMode.write,
+      );
 
       try {
         final dbVersion = int.parse((await AppDataService.instance
@@ -155,7 +162,10 @@ class BackupDatabaseService {
         db.markTablesUpdated(db.allTables);
       } catch (e) {
         // Reset the DB as it was
-        await File(dbPath).writeAsBytes(currentDBContent, mode: FileMode.write);
+        await File(dbPath).writeAsBytes(
+          currentDBContent,
+          mode: FileMode.write,
+        );
         db.markTablesUpdated(db.allTables);
 
         throw Exception('The database is invalid or could not be readed');

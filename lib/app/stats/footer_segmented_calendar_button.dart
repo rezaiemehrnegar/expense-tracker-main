@@ -4,12 +4,16 @@ import 'package:monekin/core/presentation/widgets/persistent_footer_button.dart'
 import 'package:monekin/core/services/filters/date_range_service.dart';
 
 class FooterSegmentedCalendarButton extends StatefulWidget {
-  const FooterSegmentedCalendarButton(
-      {super.key, required this.onDateRangeChanged});
+  const FooterSegmentedCalendarButton({
+    super.key,
+    required this.onDateRangeChanged,
+  });
 
   final void Function(
-          DateTime? newStartDate, DateTime? newEndDate, DateRange dateRange)
-      onDateRangeChanged;
+    DateTime? newStartDate,
+    DateTime? newEndDate,
+    DateRange dateRange,
+  ) onDateRangeChanged;
 
   @override
   State<FooterSegmentedCalendarButton> createState() =>
@@ -33,7 +37,10 @@ class _FooterSegmentedCalendarButtonState
         color: Theme.of(context).colorScheme.primary,
         style: ButtonStyle(
           side: MaterialStateProperty.all(
-              BorderSide(color: Theme.of(context).colorScheme.primary)),
+            BorderSide(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: borderRadius,
@@ -47,7 +54,10 @@ class _FooterSegmentedCalendarButtonState
   sendNewDates() {
     final newRanges = dateRangeService.getDateRange(multiplier);
     widget.onDateRangeChanged(
-        newRanges[0], newRanges[1], dateRangeService.selectedDateRange);
+      newRanges[0],
+      newRanges[1],
+      dateRangeService.selectedDateRange,
+    );
   }
 
   @override
@@ -58,17 +68,18 @@ class _FooterSegmentedCalendarButtonState
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           buildArrowButton(
-              icon: Icons.arrow_back,
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                multiplier -= 1;
-                setState(() {});
-                sendNewDates();
-              },
-              borderRadius: const BorderRadius.horizontal(
-                left: Radius.circular(10),
-                right: Radius.zero,
-              )),
+            icon: Icons.arrow_back,
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              multiplier -= 1;
+              setState(() {});
+              sendNewDates();
+            },
+            borderRadius: const BorderRadius.horizontal(
+              left: Radius.circular(10),
+              right: Radius.zero,
+            ),
+          ),
           Expanded(
             flex: 3,
             child: FilledButton(
@@ -91,26 +102,33 @@ class _FooterSegmentedCalendarButtonState
                   Builder(builder: (context) {
                     final dates = dateRangeService.getDateRange(multiplier);
 
-                    return Text(dateRangeService.getTextOfRange(
-                        startDate: dates[0], endDate: dates[1]));
+                    return Text(
+                      dateRangeService.getTextOfRange(
+                        startDate: dates[0],
+                        endDate: dates[1],
+                      ),
+                    );
                   }),
-                  const Icon(Icons.arrow_drop_down_rounded)
+                  const Icon(
+                    Icons.arrow_drop_down_rounded,
+                  )
                 ],
               ),
             ),
           ),
           buildArrowButton(
-              icon: Icons.arrow_forward,
-              onPressed: () {
-                HapticFeedback.lightImpact();
-                multiplier += 1;
-                setState(() {});
-                sendNewDates();
-              },
-              borderRadius: const BorderRadius.horizontal(
-                right: Radius.circular(10),
-                left: Radius.zero,
-              )),
+            icon: Icons.arrow_forward,
+            onPressed: () {
+              HapticFeedback.lightImpact();
+              multiplier += 1;
+              setState(() {});
+              sendNewDates();
+            },
+            borderRadius: const BorderRadius.horizontal(
+              right: Radius.circular(10),
+              left: Radius.zero,
+            ),
+          ),
         ],
       ),
     );

@@ -46,7 +46,8 @@ class _FinanceHealthDetailsState extends State<FinanceHealthDetails> {
                 attrScore.getScoreReviewTitle(context),
                 style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: FinanceHealthData.getHealthyValueColor(
-                          attrScore.score),
+                        attrScore.score,
+                      ),
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -118,22 +119,24 @@ class _FinanceHealthDetailsState extends State<FinanceHealthDetails> {
                   body: Column(
                     children: [
                       buildExpansionPanel(
-                          attrScore: financeHealthData.monthsWithoutIncomeScore,
-                          title: t.financial_health.months_without_income.title,
-                          subtitle:
-                              t.financial_health.months_without_income.subtitle,
-                          text: '${financeHealthData.monthsWithoutIncome == null ? t.financial_health.months_without_income.insufficient_data : t.financial_health.months_without_income.text(
-                              n: financeHealthData.monthsWithoutIncome!.round(),
-                            )}\n\n${t.financial_health.months_without_income.suggestion}',
-                          index: 0),
+                        attrScore: financeHealthData.monthsWithoutIncomeScore,
+                        title: t.financial_health.months_without_income.title,
+                        subtitle:
+                            t.financial_health.months_without_income.subtitle,
+                        text: '${financeHealthData.monthsWithoutIncome == null ? t.financial_health.months_without_income.insufficient_data : t.financial_health.months_without_income.text(
+                            n: financeHealthData.monthsWithoutIncome!.round(),
+                          )}\n\n${t.financial_health.months_without_income.suggestion}',
+                        index: 0,
+                      ),
                       buildExpansionPanel(
-                          attrScore: financeHealthData.savingPercentageScore,
-                          title: t.financial_health.savings_percentage.title,
-                          subtitle:
-                              t.financial_health.savings_percentage.subtitle,
-                          text:
-                              '$savingsText\n\n${t.financial_health.savings_percentage.suggestion}',
-                          index: 1)
+                        attrScore: financeHealthData.savingPercentageScore,
+                        title: t.financial_health.savings_percentage.title,
+                        subtitle:
+                            t.financial_health.savings_percentage.subtitle,
+                        text:
+                            '$savingsText\n\n${t.financial_health.savings_percentage.suggestion}',
+                        index: 1,
+                      )
                     ],
                     //elevation: 0,
                   ),

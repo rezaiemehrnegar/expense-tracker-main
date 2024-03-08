@@ -58,11 +58,18 @@ class TagStats extends StatelessWidget {
                 final tags = tagsSnapshot.data!;
 
                 final tagsInfo = tags
-                    .map((e) => getTagInfo(e, trSnapshot.data!))
-                    .where((element) => element.transactions.isNotEmpty)
+                    .map((e) => getTagInfo(
+                          e,
+                          trSnapshot.data!,
+                        ))
+                    .where(
+                      (element) => element.transactions.isNotEmpty,
+                    )
                     .toList();
 
-                tagsInfo.sort((a, b) => a.value.compareTo(b.value));
+                tagsInfo.sort(
+                  (a, b) => a.value.compareTo(b.value),
+                );
 
                 if (tags.isEmpty || tagsInfo.isEmpty) {
                   return Padding(

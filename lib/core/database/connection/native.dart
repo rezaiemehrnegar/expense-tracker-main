@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
@@ -17,7 +16,12 @@ DatabaseConnection connect(
       );
     }
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, dbName));
+    final file = File(
+      p.join(
+        dbFolder.path,
+        dbName,
+      ),
+    );
     return DatabaseConnection(NativeDatabase.createInBackground(
       file,
       logStatements: logStatements,
