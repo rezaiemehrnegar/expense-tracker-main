@@ -44,15 +44,19 @@ class MonekinAppEntryPoint extends StatelessWidget {
 
           final lang = userSettings
               .firstWhere(
-                  (element) => element.settingKey == SettingKey.appLanguage)
+                (element) => element.settingKey == SettingKey.appLanguage,
+              )
               .settingValue;
 
           if (lang != null) {
-            print('App language found. Setting the locale to `$lang`...');
+            print(
+              'App language found. Setting the locale to `$lang`...',
+            );
             LocaleSettings.setLocaleRaw(lang);
           } else {
             print(
-                'App language not found. Setting the user device language...');
+              'App language not found. Setting the user device language...',
+            );
 
             LocaleSettings.useDeviceLocale();
 
@@ -91,11 +95,12 @@ class MonekinAppEntryPoint extends StatelessWidget {
 final _appRouter = AppRouter();
 
 class MaterialAppContainer extends StatelessWidget {
-  const MaterialAppContainer(
-      {super.key,
-      required this.themeMode,
-      required this.accentColor,
-      required this.amoledMode});
+  const MaterialAppContainer({
+    super.key,
+    required this.themeMode,
+    required this.accentColor,
+    required this.amoledMode,
+  });
 
   final ThemeMode themeMode;
   final String accentColor;
@@ -114,18 +119,22 @@ class MaterialAppContainer extends StatelessWidget {
         locale: TranslationProvider.of(context).flutterLocale,
         supportedLocales: AppLocaleUtils.supportedLocales,
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        theme: getThemeData(context,
-            isDark: false,
-            amoledMode: amoledMode,
-            lightDynamic: lightDynamic,
-            darkDynamic: darkDynamic,
-            accentColor: accentColor),
-        darkTheme: getThemeData(context,
-            isDark: true,
-            amoledMode: amoledMode,
-            lightDynamic: lightDynamic,
-            darkDynamic: darkDynamic,
-            accentColor: accentColor),
+        theme: getThemeData(
+          context,
+          isDark: false,
+          amoledMode: amoledMode,
+          lightDynamic: lightDynamic,
+          darkDynamic: darkDynamic,
+          accentColor: accentColor,
+        ),
+        darkTheme: getThemeData(
+          context,
+          isDark: true,
+          amoledMode: amoledMode,
+          lightDynamic: lightDynamic,
+          darkDynamic: darkDynamic,
+          accentColor: accentColor,
+        ),
         themeMode: themeMode,
         routerConfig: _appRouter.config(),
       );

@@ -171,13 +171,14 @@ class _FilterSheetModalState extends State<FilterSheetModal> {
                                       onClick: () async {
                                         final modalRes =
                                             await showAccountSelectorBottomSheet(
-                                                context,
-                                                AccountSelector(
-                                                  allowMultiSelection: true,
-                                                  filterSavingAccounts: false,
-                                                  selectedAccounts:
-                                                      selectedAccounts.toList(),
-                                                ));
+                                          context,
+                                          AccountSelector(
+                                            allowMultiSelection: true,
+                                            filterSavingAccounts: false,
+                                            selectedAccounts:
+                                                selectedAccounts.toList(),
+                                          ),
+                                        );
 
                                         if (modalRes != null &&
                                             modalRes.isNotEmpty) {
@@ -244,14 +245,12 @@ class _FilterSheetModalState extends State<FilterSheetModal> {
                                           setState(() {
                                             filtersToReturn =
                                                 filtersToReturn.copyWith(
-                                                    categories: snapshot
-                                                                .hasData &&
-                                                            modalRes.length ==
-                                                                snapshot.data!
-                                                                    .length
-                                                        ? null
-                                                        : modalRes
-                                                            .map((e) => e.id));
+                                              categories: snapshot.hasData &&
+                                                      modalRes.length ==
+                                                          snapshot.data!.length
+                                                  ? null
+                                                  : modalRes.map((e) => e.id),
+                                            );
                                           });
                                         }
                                       });
@@ -317,64 +316,70 @@ class _FilterSheetModalState extends State<FilterSheetModal> {
                                   return Row(
                                     children: [
                                       Flexible(
-                                          child: TextFormField(
-                                        decoration: InputDecoration(
-                                          labelText:
-                                              t.transaction.filters.from_value,
-                                          hintText: 'Ex.: 200',
-                                          suffixText:
-                                              prefCurrencySnapshot.data?.symbol,
-                                        ),
-                                        keyboardType: TextInputType.number,
-                                        validator: (value) {
-                                          if (value == null || value.isEmpty) {
+                                        child: TextFormField(
+                                          decoration: InputDecoration(
+                                            labelText: t
+                                                .transaction.filters.from_value,
+                                            hintText: 'Ex.: 200',
+                                            suffixText: prefCurrencySnapshot
+                                                .data?.symbol,
+                                          ),
+                                          keyboardType: TextInputType.number,
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty) {
+                                              return null;
+                                            }
+
+                                            final defaultNumberValidatorResult =
+                                                fieldValidator(
+                                              value,
+                                              isRequired: false,
+                                              validator: ValidatorType.double,
+                                            );
+
+                                            if (defaultNumberValidatorResult !=
+                                                null) {
+                                              return defaultNumberValidatorResult;
+                                            }
+
+                                            final valToNum =
+                                                double.parse(value);
+
+                                            if (valToNum < 0) {
+                                              return t
+                                                  .general.validations.positive;
+                                            } else if (filtersToReturn
+                                                        .maxValue !=
+                                                    null &&
+                                                valToNum >
+                                                    filtersToReturn.maxValue!) {
+                                              return t.general.validations
+                                                  .max_number(
+                                                x: filtersToReturn.maxValue!,
+                                              );
+                                            }
+
                                             return null;
-                                          }
+                                          },
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                          textInputAction: TextInputAction.next,
+                                          inputFormatters:
+                                              decimalDigitFormatter,
+                                          initialValue:
+                                              (filtersToReturn.minValue ?? 0)
+                                                  .toStringAsFixed(2),
+                                          onChanged: (value) {
+                                            filtersToReturn =
+                                                filtersToReturn.copyWith(
+                                              minValue: double.tryParse(value),
+                                            );
 
-                                          final defaultNumberValidatorResult =
-                                              fieldValidator(value,
-                                                  isRequired: false,
-                                                  validator:
-                                                      ValidatorType.double);
-
-                                          if (defaultNumberValidatorResult !=
-                                              null) {
-                                            return defaultNumberValidatorResult;
-                                          }
-
-                                          final valToNum = double.parse(value);
-
-                                          if (valToNum < 0) {
-                                            return t
-                                                .general.validations.positive;
-                                          } else if (filtersToReturn.maxValue !=
-                                                  null &&
-                                              valToNum >
-                                                  filtersToReturn.maxValue!) {
-                                            return t.general.validations
-                                                .max_number(
-                                                    x: filtersToReturn
-                                                        .maxValue!);
-                                          }
-
-                                          return null;
-                                        },
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                        textInputAction: TextInputAction.next,
-                                        inputFormatters: decimalDigitFormatter,
-                                        initialValue:
-                                            (filtersToReturn.minValue ?? 0)
-                                                .toStringAsFixed(2),
-                                        onChanged: (value) {
-                                          filtersToReturn =
-                                              filtersToReturn.copyWith(
-                                            minValue: double.tryParse(value),
-                                          );
-
-                                          setState(() {});
-                                        },
-                                      )),
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
                                       const SizedBox(width: 16),
                                       Flexible(
                                           child: TextFormField(
@@ -567,7 +572,6 @@ class _FilterSheetModalState extends State<FilterSheetModal> {
                                                       .whereNot((element) =>
                                                           element.id == tag.id)
                                                       .map((e) => e.id)
-                                                      
                                                 ];
                                               } else if (value) {
                                                 newListToAssign.add(tag.id);

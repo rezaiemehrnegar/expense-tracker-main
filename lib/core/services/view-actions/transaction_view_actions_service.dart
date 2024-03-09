@@ -8,7 +8,6 @@ import 'package:monekin/core/presentation/widgets/confirm_dialog.dart';
 import 'package:monekin/core/routes/app_router.dart';
 import 'package:monekin/core/utils/list_tile_action_item.dart';
 import 'package:uuid/uuid.dart';
-
 import '../../../i18n/translations.g.dart';
 
 class TransactionViewActionService {

@@ -2,8 +2,15 @@ import 'package:flutter/services.dart';
 
 /// A text input formatter that only allow two decimal places, replacing incorrect decimal symbols
 List<FilteringTextInputFormatter> get decimalDigitFormatter => [
-      FilteringTextInputFormatter.deny(',', replacementString: '.'),
-      FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d{0,2})')),
+      FilteringTextInputFormatter.deny(
+        ',',
+        replacementString: '.',
+      ),
+      FilteringTextInputFormatter.allow(
+        RegExp(
+          r'(^\d*\.?\d{0,2})',
+        ),
+      ),
     ];
 
 enum ValidatorType {

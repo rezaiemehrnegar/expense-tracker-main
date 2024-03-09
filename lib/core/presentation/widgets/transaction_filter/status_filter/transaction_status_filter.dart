@@ -4,11 +4,12 @@ import 'package:monekin/core/presentation/widgets/transaction_filter/status_filt
 import 'package:monekin/i18n/translations.g.dart';
 
 class TransactionStatusFilter extends StatelessWidget {
-  const TransactionStatusFilter(
-      {super.key,
-      this.onSelected,
-      required this.selectedStatuses,
-      required this.allowMultipleSelection});
+  const TransactionStatusFilter({
+    super.key,
+    this.onSelected,
+    required this.selectedStatuses,
+    required this.allowMultipleSelection,
+  });
 
   final void Function(TransactionStatus? statusSelected, bool value)?
       onSelected;
@@ -24,7 +25,8 @@ class TransactionStatusFilter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-            '${t.transaction.status.display(n: allowMultipleSelection ? 10 : 1)}:'),
+          '${t.transaction.status.display(n: allowMultipleSelection ? 10 : 1)}:',
+        ),
         const SizedBox(height: 4),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
