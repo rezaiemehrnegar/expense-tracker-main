@@ -52,47 +52,48 @@ class ResponsiveRowColumn extends StatelessWidget {
   get isColumn => direction == Axis.vertical;
 
   /// The [ResponsiveRowColumn] constructor
-  const ResponsiveRowColumn(
-      {super.key,
-      this.children = const [],
-      required this.direction,
-      this.rowMainAxisAlignment = MainAxisAlignment.start,
-      this.rowMainAxisSize = MainAxisSize.max,
-      this.rowCrossAxisAlignment = CrossAxisAlignment.center,
-      this.rowTextDirection,
-      this.rowVerticalDirection = VerticalDirection.down,
-      this.rowTextBaseline,
-      this.columnMainAxisAlignment = MainAxisAlignment.start,
-      this.columnMainAxisSize = MainAxisSize.max,
-      this.columnCrossAxisAlignment = CrossAxisAlignment.center,
-      this.columnTextDirection,
-      this.columnVerticalDirection = VerticalDirection.down,
-      this.columnTextBaseline,
-      this.rowSpacing,
-      this.columnSpacing,
-      this.rowPadding = EdgeInsets.zero,
-      this.columnPadding = EdgeInsets.zero});
+  const ResponsiveRowColumn({
+    super.key,
+    this.children = const [],
+    required this.direction,
+    this.rowMainAxisAlignment = MainAxisAlignment.start,
+    this.rowMainAxisSize = MainAxisSize.max,
+    this.rowCrossAxisAlignment = CrossAxisAlignment.center,
+    this.rowTextDirection,
+    this.rowVerticalDirection = VerticalDirection.down,
+    this.rowTextBaseline,
+    this.columnMainAxisAlignment = MainAxisAlignment.start,
+    this.columnMainAxisSize = MainAxisSize.max,
+    this.columnCrossAxisAlignment = CrossAxisAlignment.center,
+    this.columnTextDirection,
+    this.columnVerticalDirection = VerticalDirection.down,
+    this.columnTextBaseline,
+    this.rowSpacing,
+    this.columnSpacing,
+    this.rowPadding = EdgeInsets.zero,
+    this.columnPadding = EdgeInsets.zero,
+  });
 
   /// Create a [ResponsiveRowColumn] with the same padding and space between children for row and column mode
-  const ResponsiveRowColumn.withSymetricSpacing(
-      {super.key,
-      this.children = const [],
-      required this.direction,
-      this.rowMainAxisAlignment = MainAxisAlignment.start,
-      this.rowMainAxisSize = MainAxisSize.max,
-      this.rowCrossAxisAlignment = CrossAxisAlignment.center,
-      this.rowTextDirection,
-      this.rowVerticalDirection = VerticalDirection.down,
-      this.rowTextBaseline,
-      this.columnMainAxisAlignment = MainAxisAlignment.start,
-      this.columnMainAxisSize = MainAxisSize.max,
-      this.columnCrossAxisAlignment = CrossAxisAlignment.center,
-      this.columnTextDirection,
-      this.columnVerticalDirection = VerticalDirection.down,
-      this.columnTextBaseline,
-      double? spacing,
-      EdgeInsets padding = EdgeInsets.zero})
-      : rowPadding = padding,
+  const ResponsiveRowColumn.withSymetricSpacing({
+    super.key,
+    this.children = const [],
+    required this.direction,
+    this.rowMainAxisAlignment = MainAxisAlignment.start,
+    this.rowMainAxisSize = MainAxisSize.max,
+    this.rowCrossAxisAlignment = CrossAxisAlignment.center,
+    this.rowTextDirection,
+    this.rowVerticalDirection = VerticalDirection.down,
+    this.rowTextBaseline,
+    this.columnMainAxisAlignment = MainAxisAlignment.start,
+    this.columnMainAxisSize = MainAxisSize.max,
+    this.columnCrossAxisAlignment = CrossAxisAlignment.center,
+    this.columnTextDirection,
+    this.columnVerticalDirection = VerticalDirection.down,
+    this.columnTextBaseline,
+    double? spacing,
+    EdgeInsets padding = EdgeInsets.zero,
+  })  : rowPadding = padding,
         columnPadding = padding,
         rowSpacing = spacing,
         columnSpacing = spacing;
@@ -110,7 +111,11 @@ class ResponsiveRowColumn extends StatelessWidget {
           verticalDirection: rowVerticalDirection,
           textBaseline: rowTextBaseline,
           children: [
-            ...buildChildren(children, true, rowSpacing),
+            ...buildChildren(
+              children,
+              true,
+              rowSpacing,
+            ),
           ],
         ),
       );
@@ -126,7 +131,11 @@ class ResponsiveRowColumn extends StatelessWidget {
         verticalDirection: columnVerticalDirection,
         textBaseline: columnTextBaseline,
         children: [
-          ...buildChildren(children, false, columnSpacing),
+          ...buildChildren(
+            children,
+            false,
+            columnSpacing,
+          ),
         ],
       ),
     );
@@ -149,12 +158,19 @@ class ResponsiveRowColumn extends StatelessWidget {
     // Add padding between widgets..
     List<Widget> widgetList = [];
     for (int i = 0; i < childrenHolder.length; i++) {
-      widgetList.add(childrenHolder[i].copyWith(rowColumn: rowColumn));
+      widgetList.add(
+        childrenHolder[i].copyWith(
+          rowColumn: rowColumn,
+        ),
+      );
       if (spacing != null && i != childrenHolder.length - 1) {
-        widgetList.add(Padding(
+        widgetList.add(
+          Padding(
             padding: rowColumn
                 ? EdgeInsets.only(right: spacing)
-                : EdgeInsets.only(bottom: spacing)));
+                : EdgeInsets.only(bottom: spacing),
+          ),
+        );
       }
     }
     return widgetList;
@@ -181,29 +197,33 @@ class ResponsiveRowColumnItem extends StatelessWidget {
   final FlexFit? rowFit;
   final FlexFit? columnFit;
 
-  const ResponsiveRowColumnItem(
-      {super.key,
-      required this.child,
-      this.rowOrder = 1073741823,
-      this.columnOrder = 1073741823,
-      this.rowColumn = true,
-      this.rowFlex,
-      this.columnFlex,
-      this.rowFit,
-      this.columnFit});
+  const ResponsiveRowColumnItem({
+    super.key,
+    required this.child,
+    this.rowOrder = 1073741823,
+    this.columnOrder = 1073741823,
+    this.rowColumn = true,
+    this.rowFlex,
+    this.columnFlex,
+    this.rowFit,
+    this.columnFit,
+  });
 
   /// Build a `SizedBox` inside the responsive row/column layout. The [space] define the height of the `SizedBox` in Column mode and the width in row mode
-  ResponsiveRowColumnItem.spacer(double space,
-      {super.key,
-      this.rowOrder = 1073741823,
-      this.columnOrder = 1073741823,
-      this.rowColumn = true,
-      this.rowFlex,
-      this.columnFlex,
-      this.rowFit,
-      this.columnFit})
-      : child = SizedBox(
-            height: rowColumn ? space : null, width: !rowColumn ? space : null);
+  ResponsiveRowColumnItem.spacer(
+    double space, {
+    super.key,
+    this.rowOrder = 1073741823,
+    this.columnOrder = 1073741823,
+    this.rowColumn = true,
+    this.rowFlex,
+    this.columnFlex,
+    this.rowFit,
+    this.columnFit,
+  }) : child = SizedBox(
+          height: rowColumn ? space : null,
+          width: !rowColumn ? space : null,
+        );
 
   @override
   Widget build(BuildContext context) {

@@ -4,14 +4,15 @@ import 'package:monekin/core/presentation/widgets/number_ui_formatters/ui_number
 import 'package:monekin/core/utils/color_utils.dart';
 
 class TrendingValue extends StatelessWidget {
-  const TrendingValue(
-      {super.key,
-      required this.percentage,
-      this.decimalDigits = 2,
-      this.fontSize = 14,
-      this.fontWeight = FontWeight.normal,
-      this.filled = false,
-      this.outlined = false});
+  const TrendingValue({
+    super.key,
+    required this.percentage,
+    this.decimalDigits = 2,
+    this.fontSize = 14,
+    this.fontWeight = FontWeight.normal,
+    this.filled = false,
+    this.outlined = false,
+  });
 
   final double percentage;
   final int decimalDigits;
@@ -48,9 +49,10 @@ class TrendingValue extends StatelessWidget {
         UINumberFormatter.percentage(
           amountToConvert: percentage,
           textStyle: TextStyle(
-              fontSize: fontSize,
-              fontWeight: fontWeight,
-              color: _getColorBasedOnPercentage(context)),
+            fontSize: fontSize,
+            fontWeight: fontWeight,
+            color: _getColorBasedOnPercentage(context),
+          ),
         ).getTextWidget(context)
       ],
     );
@@ -75,7 +77,10 @@ class TrendingValue extends StatelessWidget {
               : (_getColorBasedOnPercentage(context).lighten(0.85)),
           borderRadius: BorderRadius.circular(fontSize / 3.5),
           border: outlined
-              ? Border.all(color: _getColorBasedOnPercentage(context), width: 1)
+              ? Border.all(
+                  color: _getColorBasedOnPercentage(context),
+                  width: 1,
+                )
               : null,
         ),
         child: paintTrendValue(context),

@@ -5,8 +5,10 @@ abstract class AnimationControllerState<T extends StatefulWidget>
   AnimationControllerState(this.animationDuration);
 
   final Duration animationDuration;
-  late final animationController =
-      AnimationController(vsync: this, duration: animationDuration);
+  late final animationController = AnimationController(
+    vsync: this,
+    duration: animationDuration,
+  );
 
   @override
   void dispose() {

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:monekin/core/presentation/animations/animation_controller.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +37,9 @@ class ShakeWidgetState extends AnimationControllerState<ShakeWidget> {
   late final Animation<double> _sineAnimation =
       Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
     parent: animationController,
-    curve: SineCurve(count: widget.shakeCount.toDouble()),
+    curve: SineCurve(
+      count: widget.shakeCount.toDouble(),
+    ),
   ));
 
   @override
@@ -71,7 +72,10 @@ class ShakeWidgetState extends AnimationControllerState<ShakeWidget> {
       child: widget.child,
       builder: (context, child) {
         return Transform.translate(
-          offset: Offset(_sineAnimation.value * widget.shakeOffset, 0),
+          offset: Offset(
+            _sineAnimation.value * widget.shakeOffset,
+            0,
+          ),
           child: child,
         );
       },

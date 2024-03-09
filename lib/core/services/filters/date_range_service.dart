@@ -84,7 +84,9 @@ class DateRangeService {
     assert(!(iconText != null && icon != null));
 
     final BorderSide border = BorderSide(
-        color: Theme.of(context).dividerColor.withOpacity(0.2), width: 1);
+      color: Theme.of(context).dividerColor.withOpacity(0.2),
+      width: 1,
+    );
 
     final selected = dateRange == selectedDateRange;
 
@@ -272,8 +274,12 @@ class DateRangeService {
         endDate!.day,
       );
     } else if (selectedDateRange == DateRange.weekly) {
-      startDateToReturn = startDate!.add(Duration(days: 7 * multiplier));
-      endDateToReturn = endDate!.add(Duration(days: 7 * multiplier));
+      startDateToReturn = startDate!.add(
+        Duration(days: 7 * multiplier),
+      );
+      endDateToReturn = endDate!.add(
+        Duration(days: 7 * multiplier),
+      );
     } else if (selectedDateRange == DateRange.quaterly) {
       startDateToReturn = DateTime(
         startDate!.year,
@@ -290,7 +296,10 @@ class DateRangeService {
       return [null, null];
     }
 
-    return [startDateToReturn, endDateToReturn];
+    return [
+      startDateToReturn,
+      endDateToReturn,
+    ];
   }
 
   Future<void> openDateRangeModal(BuildContext context) async {
@@ -302,7 +311,10 @@ class DateRangeService {
         return Align(
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxWidth: min(MediaQuery.of(context).size.width * 0.75, 450),
+              maxWidth: min(
+                MediaQuery.of(context).size.width * 0.75,
+                450,
+              ),
               maxHeight: MediaQuery.of(context).size.height * 0.75,
             ),
             child: ClipRRect(

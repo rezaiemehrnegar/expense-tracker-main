@@ -187,7 +187,8 @@ abstract class _$AppRouter extends RootStackRouter {
     },
     StatsRoute.name: (routeData) {
       final args = routeData.argsAs<StatsRouteArgs>(
-          orElse: () => const StatsRouteArgs());
+        orElse: () => const StatsRouteArgs(),
+      );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: StatsPage(
@@ -198,7 +199,8 @@ abstract class _$AppRouter extends RootStackRouter {
     },
     TagFormRoute.name: (routeData) {
       final args = routeData.argsAs<TagFormRouteArgs>(
-          orElse: () => const TagFormRouteArgs());
+        orElse: () => const TagFormRouteArgs(),
+      );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: TagFormPage(
@@ -209,7 +211,8 @@ abstract class _$AppRouter extends RootStackRouter {
     },
     TagListRoute.name: (routeData) {
       final args = routeData.argsAs<TagListRouteArgs>(
-          orElse: () => const TagListRouteArgs());
+        orElse: () => const TagListRouteArgs(),
+      );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: TagListPage(
@@ -232,7 +235,8 @@ abstract class _$AppRouter extends RootStackRouter {
     },
     TransactionFormRoute.name: (routeData) {
       final args = routeData.argsAs<TransactionFormRouteArgs>(
-          orElse: () => const TransactionFormRouteArgs());
+        orElse: () => const TransactionFormRouteArgs(),
+      );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: TransactionFormPage(
@@ -246,7 +250,8 @@ abstract class _$AppRouter extends RootStackRouter {
     },
     TransactionsRoute.name: (routeData) {
       final args = routeData.argsAs<TransactionsRouteArgs>(
-          orElse: () => const TransactionsRouteArgs());
+        orElse: () => const TransactionsRouteArgs(),
+      );
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: TransactionsPage(

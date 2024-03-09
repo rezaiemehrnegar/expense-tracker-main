@@ -95,7 +95,9 @@ ThemeData getThemeData(
     darkColorScheme = darkDynamic.harmonized();
 
     if (amoledMode) {
-      darkColorScheme = darkColorScheme.copyWith(background: Colors.black);
+      darkColorScheme = darkColorScheme.copyWith(
+        background: Colors.black,
+      );
     }
 
     darkCustomColors = darkCustomColors.harmonized(darkColorScheme);
@@ -160,14 +162,15 @@ ThemeData getThemeData(
       leadingAndTrailingTextStyle: listTileSmallText,
     ),
     tabBarTheme: TabBarTheme(
-        unselectedLabelColor: isDark
-            ? theme.colorScheme.onPrimaryContainer
-            : theme.colorScheme.onPrimary,
-        labelColor: isDark
-            ? theme.colorScheme.primary
-            : theme.colorScheme.primaryContainer,
-        indicatorColor: isDark
-            ? theme.colorScheme.primary
-            : theme.colorScheme.primaryContainer),
+      unselectedLabelColor: isDark
+          ? theme.colorScheme.onPrimaryContainer
+          : theme.colorScheme.onPrimary,
+      labelColor: isDark
+          ? theme.colorScheme.primary
+          : theme.colorScheme.primaryContainer,
+      indicatorColor: isDark
+          ? theme.colorScheme.primary
+          : theme.colorScheme.primaryContainer,
+    ),
   );
 }

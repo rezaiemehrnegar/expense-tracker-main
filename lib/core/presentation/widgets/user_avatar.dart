@@ -3,7 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:monekin/core/presentation/widgets/skeleton.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({super.key, this.avatar, this.size = 36, this.border});
+  const UserAvatar({
+    super.key,
+    this.avatar,
+    this.size = 36,
+    this.border,
+  });
 
   final String? avatar;
 
@@ -30,7 +35,11 @@ class UserAvatar extends StatelessWidget {
             color: colors.primaryContainer),
         child: Builder(builder: (context) {
           if (avatar == null) {
-            return const Skeleton(width: 36, height: 36, applyMarging: false);
+            return const Skeleton(
+              width: 36,
+              height: 36,
+              applyMarging: false,
+            );
           }
 
           return SvgPicture.asset(
