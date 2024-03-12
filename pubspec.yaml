@@ -26,44 +26,44 @@ dependencies:
     sdk: flutter
 
   # General
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.6
   collection: ^1.18.0
   equatable: ^2.0.5
-  path: ^1.8.2
-  async: ^2.10.0
+  path: ^1.9.0
+  async: ^2.11.0
   rxdart: ^0.27.7
   google_mobile_ads: ^4.0.0
 
   # i18n
-  intl: ^0.18.0
-  slang: ^3.18.1
-  slang_flutter: ^3.18.0
+  intl: ^0.18.1
+  slang: any
+  slang_flutter: any
 
   # Drift
-  drift: ^2.8.1
-  path_provider: ^2.0.13
-  http: ^1.1.2
-  sqlite3: ^2.0.0
-  sqlite3_flutter_libs: ^0.5.18
+  drift: ^2.16.0
+  path_provider: ^2.1.2
+  http: any
+  sqlite3: ^2.4.0
+  sqlite3_flutter_libs: ^0.5.20
 
   # Other
-  flutter_svg: ^2.0.5
-  permission_handler: ^11.1.0
+  flutter_svg: ^2.0.10+1
+  permission_handler: ^11.3.0
   json_annotation: ^4.8.1
-  fl_chart: ^0.63.0
-  file_picker: ^6.1.1
-  share_plus: ^7.1.0
-  url_launcher: ^6.1.11
-  uuid: ^3.0.7
-  csv: ^5.0.2
-  dotted_border: ^2.0.0+3
-  package_info_plus: ^4.0.2
-  introduction_screen: ^3.1.11
-  dynamic_color: ^1.6.7
+  fl_chart: ^0.66.2
+  file_picker: ^6.2.0
+  share_plus: ^7.2.2
+  url_launcher: ^6.2.5
+  uuid: ^4.3.3
+  csv: any
+  dotted_border: ^2.1.0
+  package_info_plus: any
+  introduction_screen: ^3.1.12
+  dynamic_color: ^1.7.0
   copy_with_extension: ^5.0.4
   freezed_annotation: ^2.4.1
-  in_app_purchase: ^3.1.11
-  auto_route: ^7.8.4
+  in_app_purchase: ^3.1.13
+  auto_route: ^7.9.0
 
 dev_dependencies:
   flutter_test:
@@ -72,13 +72,13 @@ dev_dependencies:
   flutter_lints: ^3.0.1
 
   # Generators:
-  build_runner: ^2.3.3
-  json_serializable: ^6.2.0
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
   flutter_launcher_icons: ^0.13.1 # Package to regenerate icons (config later in this file). To run, type `dart run flutter_launcher_icons`
-  drift_dev: ^2.13.2
-  slang_build_runner: ^3.18.0 # To regenerate the translations run 'dart run slang'
+  drift_dev: ^2.16.0
+  slang_build_runner: ^3.30.0 # To regenerate the translations run 'dart run slang'
   copy_with_extension_gen: ^5.0.4
-  freezed: ^2.4.5
+  freezed: ^2.4.7
   auto_route_generator: ^7.3.2
 
 flutter_launcher_icons:
